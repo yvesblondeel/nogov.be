@@ -1,0 +1,2547 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nogov.be — Belgium Federal Government Monitor</title>
+  <meta name="description" content="Live tracker of Belgium's Federal Government status, caretaker mechanics (affaires courantes / lopende zaken / laufende Geschäfte), bilingual RTBF & VRT NWS feeds, and Belgian Monarchy announcements." />
+
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono & Material Symbols Rounded -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          borderRadius: {
+            'm3-xl': '28px',
+            'm3-lg': '20px',
+            'm3-md': '16px',
+            'm3-sm': '12px',
+            'm3-pill': '100px',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       GOOGLE MATERIAL YOU 3.0 (MATERIAL DESIGN 3) — CIVIC SLATE BLUE PALETTE
+       Light Mode & Dark Mode Tokens
+       ========================================================================== */
+
+    :root,
+    [data-theme="light"] {
+      --md-sys-color-primary: #2B5EA7;
+      --md-sys-color-on-primary: #FFFFFF;
+      --md-sys-color-primary-container: #D8E2FF;
+      --md-sys-color-on-primary-container: #001A41;
+
+      --md-sys-color-secondary: #535F70;
+      --md-sys-color-on-secondary: #FFFFFF;
+      --md-sys-color-secondary-container: #D7E3F7;
+      --md-sys-color-on-secondary-container: #101C2B;
+
+      --md-sys-color-tertiary: #6B5778;
+      --md-sys-color-on-tertiary: #FFFFFF;
+      --md-sys-color-tertiary-container: #F2DAFF;
+      --md-sys-color-on-tertiary-container: #251431;
+
+      --md-sys-color-error: #BA1A1A;
+      --md-sys-color-on-error: #FFFFFF;
+      --md-sys-color-error-container: #FFDAD6;
+      --md-sys-color-on-error-container: #410002;
+
+      --md-sys-color-surface: #F8F9FF;
+      --md-sys-color-surface-container-low: #F1F4FC;
+      --md-sys-color-surface-container: #EBEFF8;
+      --md-sys-color-surface-container-high: #E5E9F3;
+      --md-sys-color-surface-container-highest: #DFE3ED;
+
+      --md-sys-color-on-surface: #191C22;
+      --md-sys-color-on-surface-variant: #434750;
+      --md-sys-color-outline: #747781;
+      --md-sys-color-outline-variant: #C4C6D0;
+
+      --md-sys-elevation-1: 0 1px 2px rgba(25, 28, 34, 0.07), 0 1px 3px 1px rgba(25, 28, 34, 0.04);
+      --md-sys-elevation-2: 0 1px 2px rgba(25, 28, 34, 0.09), 0 2px 6px 2px rgba(25, 28, 34, 0.05);
+      --md-sys-elevation-3: 0 4px 8px 3px rgba(25, 28, 34, 0.08), 0 1px 3px rgba(25, 28, 34, 0.11);
+    }
+
+    [data-theme="dark"] {
+      --md-sys-color-primary: #ADC6FF;
+      --md-sys-color-on-primary: #002E69;
+      --md-sys-color-primary-container: #004494;
+      --md-sys-color-on-primary-container: #D8E2FF;
+
+      --md-sys-color-secondary: #BBC7DB;
+      --md-sys-color-on-secondary: #253140;
+      --md-sys-color-secondary-container: #3B4858;
+      --md-sys-color-on-secondary-container: #D7E3F7;
+
+      --md-sys-color-tertiary: #D6BEE4;
+      --md-sys-color-on-tertiary: #3B2948;
+      --md-sys-color-tertiary-container: #523F5F;
+      --md-sys-color-on-tertiary-container: #F2DAFF;
+
+      --md-sys-color-error: #FFB4AB;
+      --md-sys-color-on-error: #690005;
+      --md-sys-color-error-container: #93000A;
+      --md-sys-color-on-error-container: #FFDAD6;
+
+      --md-sys-color-surface: #111318;
+      --md-sys-color-surface-container-low: #191C22;
+      --md-sys-color-surface-container: #1D2026;
+      --md-sys-color-surface-container-high: #272A31;
+      --md-sys-color-surface-container-highest: #32353C;
+
+      --md-sys-color-on-surface: #E1E2E9;
+      --md-sys-color-on-surface-variant: #C4C6D0;
+      --md-sys-color-outline: #8E9099;
+      --md-sys-color-outline-variant: #44474F;
+
+      --md-sys-elevation-1: 0 1px 3px 1px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.5);
+      --md-sys-elevation-2: 0 2px 6px 2px rgba(0, 0, 0, 0.38), 0 1px 2px rgba(0, 0, 0, 0.5);
+      --md-sys-elevation-3: 0 4px 10px 3px rgba(0, 0, 0, 0.42), 0 1px 3px rgba(0, 0, 0, 0.55);
+    }
+
+    /* ==========================================================================
+       BASE & MATERIAL YOU 3.0 COMPONENT STYLES
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--md-sys-color-surface);
+      color: var(--md-sys-color-on-surface);
+      transition: background-color 260ms cubic-bezier(0.2, 0, 0, 1), color 260ms cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+
+    .icon-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .m3-elevation-1 { box-shadow: var(--md-sys-elevation-1); }
+    .m3-elevation-2 { box-shadow: var(--md-sys-elevation-2); }
+    .m3-elevation-3 { box-shadow: var(--md-sys-elevation-3); }
+
+    /* M3 State Layer */
+    .m3-state-layer {
+      position: relative;
+      overflow: hidden;
+      transition: transform 180ms cubic-bezier(0.2, 0, 0, 1),
+                  box-shadow 200ms cubic-bezier(0.2, 0, 0, 1),
+                  background-color 200ms cubic-bezier(0.2, 0, 0, 1),
+                  border-color 200ms cubic-bezier(0.2, 0, 0, 1),
+                  color 200ms cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .m3-state-layer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: currentColor;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .m3-state-layer:hover::after {
+      opacity: 0.08;
+    }
+
+    .m3-state-layer:focus-visible {
+      outline: 2px solid var(--md-sys-color-primary);
+      outline-offset: 2px;
+    }
+
+    .m3-state-layer:active::after {
+      opacity: 0.12;
+    }
+
+    /* Hero Tonal Container */
+    .m3-hero-card {
+      background:
+        radial-gradient(115% 100% at 100% 0%, color-mix(in srgb, var(--md-sys-color-primary-container) 68%, transparent) 0%, transparent 65%),
+        radial-gradient(90% 90% at 0% 100%, color-mix(in srgb, var(--md-sys-color-tertiary-container) 34%, transparent) 0%, transparent 60%),
+        var(--md-sys-color-surface-container-high);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: 28px;
+    }
+
+    /* ==========================================================================
+       THREE-COLUMN GRID WITH PIXEL-PERFECT TOP & BOTTOM ALIGNMENT
+       ========================================================================== */
+    .three-col-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    @media (min-width: 1024px) {
+      .three-col-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 360px;
+      }
+    }
+
+    .panel-column {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background-color: var(--md-sys-color-surface-container-low);
+      border-radius: 28px;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      overflow: hidden;
+      box-shadow: var(--md-sys-elevation-1);
+    }
+
+    .panel-column-monarchy {
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--md-sys-color-primary-container) 28%, var(--md-sys-color-surface-container-low)) 0%, var(--md-sys-color-surface-container-low) 190px);
+      box-shadow: var(--md-sys-elevation-2);
+    }
+
+    .panel-column-header {
+      padding: 20px 20px 16px 20px;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      background-color: color-mix(in srgb, var(--md-sys-color-surface-container) 55%, transparent);
+    }
+
+    .panel-column-feed {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    .panel-column-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--md-sys-color-outline-variant);
+      background-color: var(--md-sys-color-surface-container);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* M3 Article & Palace Cards */
+    .m3-article-card {
+      background-color: var(--md-sys-color-surface);
+      border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 80%, transparent);
+      border-radius: 18px;
+      transition: transform 200ms cubic-bezier(0.2, 0, 0, 1),
+                  box-shadow 200ms cubic-bezier(0.2, 0, 0, 1),
+                  border-color 200ms cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .m3-article-card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--md-sys-elevation-2);
+      border-color: var(--md-sys-color-primary);
+    }
+
+    @keyframes m3CardEnter {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .m3-card-animate {
+      animation: m3CardEnter 280ms cubic-bezier(0.05, 0.7, 0.1, 1) both;
+    }
+
+    @keyframes statusPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.45); opacity: 0.45; }
+    }
+
+    .pulse-ring {
+      animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Modal Backdrop */
+    .m3-scrim {
+      background-color: rgba(12, 16, 24, 0.58);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* Subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--md-sys-color-outline-variant);
+      border-radius: 100px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--md-sys-color-outline);
+    }
+  </style>
+</head>
+
+<body class="antialiased selection:bg-[var(--md-sys-color-primary-container)] selection:text-[var(--md-sys-color-on-primary-container)]"
+      style="background-color: var(--md-sys-color-surface); color: var(--md-sys-color-on-surface);">
+
+  <!-- ========================================================================
+       1. MATERIAL YOU 3.0 TOP APP BAR
+          Includes Brand Wordmark, Quadrilingual Switcher (FR | NL | DE | EN),
+          Live Polling Status Pill, and Light/Dark Mode Toggle Pill
+       ======================================================================== -->
+  <header class="sticky top-0 z-40 border-b border-[var(--md-sys-color-outline-variant)]/80 backdrop-blur-md"
+          style="background-color: color-mix(in srgb, var(--md-sys-color-surface-container) 92%, transparent);">
+    <div class="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:h-[72px] flex flex-wrap items-center justify-between gap-3">
+
+      <!-- Left: Brand Wordmark + Belgian Tricolor Pill -->
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="#top" class="flex items-center gap-2.5 group focus:outline-none">
+          <div class="flex h-9 w-9 rounded-full overflow-hidden shadow-sm ring-1 ring-black/15 shrink-0 transition-transform duration-200 group-hover:scale-105" aria-hidden="true">
+            <span class="w-1/3 h-full bg-[#1A1A1A]"></span>
+            <span class="w-1/3 h-full bg-[#FDDA24]"></span>
+            <span class="w-1/3 h-full bg-[#EF3340]"></span>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center gap-2">
+              <span class="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-[var(--md-sys-color-on-surface)]">
+                nogov<span class="text-[var(--md-sys-color-primary)]">.be</span>
+              </span>
+              <span id="headerBadge" class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-m3-pill text-[11px] font-semibold tracking-wider uppercase"
+                    style="background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);">
+                Federal Monitor
+              </span>
+            </div>
+            <span id="headerTagline" class="hidden md:block text-[11px] text-[var(--md-sys-color-on-surface-variant)] leading-tight">
+              Belgium Federal Governance &amp; Caretaker Watch
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Center / Right Controls: Quadrilingual Switcher + Live Sync + Light/Dark Toggle -->
+      <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+
+        <!-- Quadrilingual UI Language Switcher (FR | NL | DE | EN) -->
+        <div class="inline-flex items-center p-1 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)]"
+             style="background-color: var(--md-sys-color-surface);"
+             role="group" aria-label="Interface Language Switcher (FR, NL, DE, EN)">
+          <button type="button" data-lang-choice="fr"
+                  class="lang-btn m3-state-layer px-2.5 sm:px-3 py-1 rounded-m3-pill text-xs font-bold tracking-wide cursor-pointer">
+            FR
+          </button>
+          <button type="button" data-lang-choice="nl"
+                  class="lang-btn m3-state-layer px-2.5 sm:px-3 py-1 rounded-m3-pill text-xs font-bold tracking-wide cursor-pointer">
+            NL
+          </button>
+          <button type="button" data-lang-choice="de"
+                  class="lang-btn m3-state-layer px-2.5 sm:px-3 py-1 rounded-m3-pill text-xs font-bold tracking-wide cursor-pointer">
+            DE
+          </button>
+          <button type="button" data-lang-choice="en"
+                  class="lang-btn m3-state-layer px-2.5 sm:px-3 py-1 rounded-m3-pill text-xs font-bold tracking-wide cursor-pointer">
+            EN
+          </button>
+        </div>
+
+        <!-- Live Polling Status Pill -->
+        <div class="flex items-center gap-1.5 pl-3 pr-1.5 py-1 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)]"
+             style="background-color: var(--md-sys-color-surface);">
+          <span class="relative flex h-2.5 w-2.5 shrink-0">
+            <span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600"></span>
+          </span>
+          <span class="text-xs font-medium text-[var(--md-sys-color-on-surface)] whitespace-nowrap hidden sm:inline">
+            <span id="liveSyncLabel">Live sync</span>
+            <span class="text-[var(--md-sys-color-on-surface-variant)]">•</span>
+            <span id="syncCountdownText" class="font-mono tabular-nums text-[var(--md-sys-color-primary)] font-semibold">60s</span>
+          </span>
+          <span id="syncCountdownMobile" class="font-mono tabular-nums text-[11px] font-semibold text-[var(--md-sys-color-primary)] sm:hidden">
+            60s
+          </span>
+
+          <button id="manualRefreshBtn" type="button"
+                  class="m3-state-layer relative w-8 h-8 rounded-full flex items-center justify-center text-[var(--md-sys-color-primary)] hover:bg-[var(--md-sys-color-primary-container)]/40 cursor-pointer"
+                  aria-label="Refresh feeds now">
+            <svg class="w-7 h-7 -rotate-90 absolute inset-0.5 pointer-events-none" viewBox="0 0 28 28">
+              <circle cx="14" cy="14" r="11" fill="none" stroke="var(--md-sys-color-outline-variant)" stroke-width="2" opacity="0.45"></circle>
+              <circle id="syncProgressCircle" cx="14" cy="14" r="11" fill="none" stroke="var(--md-sys-color-primary)" stroke-width="2.2"
+                      stroke-dasharray="69.115" stroke-dashoffset="0" stroke-linecap="round"></circle>
+            </svg>
+            <span id="refreshIcon" class="material-symbols-rounded text-[17px] transition-transform duration-500">refresh</span>
+          </button>
+        </div>
+
+        <!-- Light / Dark Mode Pill Toggle Button (Civic Slate Blue Only) -->
+        <button id="themeToggleBtn" type="button"
+                class="m3-state-layer h-10 px-3.5 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)] inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--md-sys-color-on-surface)] cursor-pointer"
+                style="background-color: var(--md-sys-color-surface);"
+                aria-label="Toggle Light and Dark Mode">
+          <span id="themeIcon" class="material-symbols-rounded text-[18px] text-[var(--md-sys-color-primary)]">dark_mode</span>
+          <span id="themeLabelText" class="hidden sm:inline">Dark</span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MAIN VIEWPORT CONTAINER
+       ======================================================================== -->
+  <main id="top" class="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-14 space-y-6">
+
+    <!-- ======================================================================
+         2. TOP HERO SECTION: DAYS WITHOUT A FEDERAL GOVERNMENT COUNTER
+            + HISTORICAL BELGIAN BENCHMARKS
+         ====================================================================== -->
+    <section aria-labelledby="hero-counter-heading" class="m3-hero-card m3-elevation-2 p-5 sm:p-7 lg:p-8 relative overflow-hidden">
+
+      <!-- Top Row: Status Eyebrow Chip & Configure Start Date / Status Button -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <div id="statusEyebrowChip"
+             class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-m3-pill text-xs font-bold tracking-wide uppercase border"
+             style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); border-color: color-mix(in srgb, var(--md-sys-color-primary) 30%, transparent);">
+          <span class="relative flex h-2.5 w-2.5 shrink-0">
+            <span id="statusDotPing" class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
+            <span id="statusDotCore" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
+          </span>
+          <span id="statusEyebrowText">FEDERAL CRISIS WATCH • ROYAL PALACE DEADLINE (NOV 16, 2026)</span>
+        </div>
+
+        <button id="openConfigBtn" type="button"
+                class="m3-state-layer h-10 px-4 rounded-m3-pill border border-[var(--md-sys-color-outline)] inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[var(--md-sys-color-on-surface)] cursor-pointer"
+                style="background-color: var(--md-sys-color-surface);">
+          <span class="material-symbols-rounded text-[18px] text-[var(--md-sys-color-primary)]">edit_calendar</span>
+          <span id="configureBtnLabel">Configure Date / Status</span>
+        </button>
+      </div>
+
+      <!-- Center Counter Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+
+        <!-- Left 7 Cols: Large Tabular Day Counter -->
+        <div class="lg:col-span-7 flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6">
+          <div class="inline-flex items-baseline gap-3 px-6 py-4 rounded-m3-xl border border-[var(--md-sys-color-outline-variant)] m3-elevation-1 shrink-0"
+               style="background-color: var(--md-sys-color-surface);">
+            <span id="daysCounterValue"
+                  class="font-mono tabular-nums font-bold text-6xl sm:text-7xl lg:text-8xl tracking-tight leading-none text-[var(--md-sys-color-primary)]">
+              0
+            </span>
+            <div class="flex flex-col">
+              <span id="daysUnitLabel" class="font-display font-bold text-lg sm:text-xl text-[var(--md-sys-color-on-surface)] leading-tight">
+                DAYS
+              </span>
+              <span id="sinceMandateEndLabel" class="text-xs font-medium text-[var(--md-sys-color-on-surface-variant)]">
+                without full-powers cabinet
+              </span>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <h1 id="hero-counter-heading" class="font-display font-extrabold text-2xl sm:text-3xl lg:text-[34px] tracking-tight text-[var(--md-sys-color-on-surface)] leading-tight">
+              Days Without a Federal Government
+            </h1>
+            <p class="text-sm sm:text-[15px] text-[var(--md-sys-color-on-surface-variant)] leading-relaxed max-w-xl">
+              <span id="heroSubtitlePrefix">Following stalled 2027 budget negotiations under Prime Minister Bart De Wever, Belgium faces imminent caretaker status (<em>affaires courantes / lopende zaken / laufende Geschäfte</em>) effective</span>
+              <strong id="targetDateHumanLabel" class="text-[var(--md-sys-color-on-surface)]">Monday, 16 Nov 2026 at 00:00 CET</strong>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right 5 Cols: Precision Live HH : MM : SS Clock Card -->
+        <div class="lg:col-span-5">
+          <div class="p-4 sm:p-5 rounded-m3-lg border border-[var(--md-sys-color-outline-variant)]"
+               style="background-color: var(--md-sys-color-surface);">
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <span id="timerModeLabel" class="text-xs font-bold uppercase tracking-wider text-[var(--md-sys-color-primary)] flex items-center gap-1.5">
+                <span class="material-symbols-rounded text-[16px]">schedule</span>
+                <span>Countdown to Royal Palace Threshold</span>
+              </span>
+              <span id="brusselsClockBadge" class="font-mono tabular-nums text-[11px] font-semibold px-2.5 py-0.5 rounded-m3-pill"
+                    style="background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);">
+                Brussels CET
+              </span>
+            </div>
+
+            <!-- HH : MM : SS Segmented Readout -->
+            <div class="grid grid-cols-3 gap-2.5 text-center">
+              <div class="py-2.5 px-2 rounded-m3-md" style="background-color: var(--md-sys-color-surface-container);">
+                <div id="clockHours" class="font-mono tabular-nums font-bold text-2xl sm:text-3xl text-[var(--md-sys-color-on-surface)]">00</div>
+                <div id="unitHoursLabel" class="text-[11px] font-medium uppercase tracking-wider text-[var(--md-sys-color-on-surface-variant)] mt-0.5">Hours</div>
+              </div>
+              <div class="py-2.5 px-2 rounded-m3-md" style="background-color: var(--md-sys-color-surface-container);">
+                <div id="clockMinutes" class="font-mono tabular-nums font-bold text-2xl sm:text-3xl text-[var(--md-sys-color-on-surface)]">00</div>
+                <div id="unitMinutesLabel" class="text-[11px] font-medium uppercase tracking-wider text-[var(--md-sys-color-on-surface-variant)] mt-0.5">Minutes</div>
+              </div>
+              <div class="py-2.5 px-2 rounded-m3-md" style="background-color: var(--md-sys-color-primary-container);">
+                <div id="clockSeconds" class="font-mono tabular-nums font-bold text-2xl sm:text-3xl text-[var(--md-sys-color-on-primary-container)]">00</div>
+                <div id="unitSecondsLabel" class="text-[11px] font-medium uppercase tracking-wider text-[var(--md-sys-color-on-primary-container)]/80 mt-0.5">Seconds</div>
+              </div>
+            </div>
+
+            <div class="mt-2.5 flex items-center justify-between text-[11px] text-[var(--md-sys-color-on-surface-variant)]">
+              <span><span id="referencePrefixLabel">Reference:</span> <strong id="referenceTimestampLabel" class="font-mono text-[var(--md-sys-color-on-surface)]">2026-11-16 00:00 CET</strong></span>
+              <span id="phaseBadgeText" class="font-semibold text-[var(--md-sys-color-primary)]">Pre-Deadline Watch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Historical Belgian Benchmarks Bar -->
+      <div class="mt-6 pt-5 border-t border-[var(--md-sys-color-outline-variant)]/80">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-[var(--md-sys-color-on-surface-variant)] flex items-center gap-1.5">
+            <span class="material-symbols-rounded text-[16px] text-[var(--md-sys-color-primary)]">history_edu</span>
+            <span id="benchmarksTitle">Historical Belgian Federal Benchmarks</span>
+          </span>
+          <span id="benchmarksSubtitle" class="text-xs text-[var(--md-sys-color-on-surface-variant)]">
+            Live comparison against modern Belgian government formation &amp; caretaker records
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <!-- Benchmark 1 -->
+          <div class="px-3.5 py-2.5 rounded-m3-md border border-[var(--md-sys-color-outline-variant)]/75"
+               style="background-color: var(--md-sys-color-surface);">
+            <div class="flex items-center justify-between text-xs font-semibold text-[var(--md-sys-color-on-surface)]">
+              <span id="bench1Title">2010–2011 (World Record)</span>
+              <span id="bench1Days" class="font-mono tabular-nums text-[var(--md-sys-color-primary)]">541 days</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full mt-2 overflow-hidden" style="background-color: var(--md-sys-color-surface-container-highest);">
+              <div id="benchBar541" class="h-full rounded-full transition-all duration-500" style="width: 1.5%; background-color: var(--md-sys-color-primary);"></div>
+            </div>
+            <p id="bench1Desc" class="text-[11px] text-[var(--md-sys-color-on-surface-variant)] mt-1">Leterme II caretaker to Di Rupo I</p>
+          </div>
+
+          <!-- Benchmark 2 -->
+          <div class="px-3.5 py-2.5 rounded-m3-md border border-[var(--md-sys-color-outline-variant)]/75"
+               style="background-color: var(--md-sys-color-surface);">
+            <div class="flex items-center justify-between text-xs font-semibold text-[var(--md-sys-color-on-surface)]">
+              <span id="bench2Title">2019–2020 (652d w/ caretaker)</span>
+              <span id="bench2Days" class="font-mono tabular-nums text-[var(--md-sys-color-primary)]">494 days</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full mt-2 overflow-hidden" style="background-color: var(--md-sys-color-surface-container-highest);">
+              <div id="benchBar494" class="h-full rounded-full transition-all duration-500" style="width: 1.5%; background-color: var(--md-sys-color-primary);"></div>
+            </div>
+            <p id="bench2Desc" class="text-[11px] text-[var(--md-sys-color-on-surface-variant)] mt-1">Michel II / Wilmès I &amp; II to De Croo</p>
+          </div>
+
+          <!-- Benchmark 3 -->
+          <div class="px-3.5 py-2.5 rounded-m3-md border border-[var(--md-sys-color-outline-variant)]/75"
+               style="background-color: var(--md-sys-color-surface);">
+            <div class="flex items-center justify-between text-xs font-semibold text-[var(--md-sys-color-on-surface)]">
+              <span id="bench3Title">2024–2025 (Arizona Coalition)</span>
+              <span id="bench3Days" class="font-mono tabular-nums text-[var(--md-sys-color-primary)]">236 days</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full mt-2 overflow-hidden" style="background-color: var(--md-sys-color-surface-container-highest);">
+              <div id="benchBar236" class="h-full rounded-full transition-all duration-500" style="width: 1.5%; background-color: var(--md-sys-color-primary);"></div>
+            </div>
+            <p id="bench3Desc" class="text-[11px] text-[var(--md-sys-color-on-surface-variant)] mt-1">June 2024 elections to De Wever I</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         2B. QUADRILINGUAL SITUATIONAL BRIEFING PANEL (NOV 15–16, 2026)
+         ====================================================================== -->
+    <section aria-labelledby="briefing-section-heading"
+             class="rounded-m3-xl border border-[var(--md-sys-color-outline-variant)] m3-elevation-1 p-5 sm:p-6"
+             style="background-color: var(--md-sys-color-surface-container-low);">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+               style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);">
+            <span class="material-symbols-rounded text-[21px]">account_balance</span>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 id="briefing-section-heading" class="font-display font-bold text-base sm:text-lg text-[var(--md-sys-color-on-surface)]">
+                Situational Briefing — Federal Crisis &amp; Caretaker Mechanics
+              </h2>
+              <span id="briefingDateBadge" class="text-[11px] font-semibold px-2.5 py-0.5 rounded-m3-pill"
+                    style="background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);">
+                November 15–16, 2026
+              </span>
+            </div>
+            <p id="briefingSubheading" class="text-xs text-[var(--md-sys-color-on-surface-variant)]">
+              Constitutional and political context in your selected interface language
+            </p>
+          </div>
+        </div>
+
+        <button id="toggleBriefingDetailsBtn" type="button" aria-expanded="true"
+                class="m3-state-layer h-9 px-3.5 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)] inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--md-sys-color-on-surface)] cursor-pointer"
+                style="background-color: var(--md-sys-color-surface);">
+          <span id="briefingToggleText">Collapse</span>
+          <span id="briefingChevron" class="material-symbols-rounded text-[18px] transition-transform duration-200 rotate-180">expand_more</span>
+        </button>
+      </div>
+
+      <div id="briefingCardsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Card 1: Arizona Coalition & €10B Budget Deadlock -->
+        <article class="p-4 rounded-m3-lg border border-[var(--md-sys-color-outline-variant)]/75 flex flex-col justify-between gap-2"
+                 style="background-color: var(--md-sys-color-surface);">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-sys-color-primary)] mb-1.5">
+              <span class="material-symbols-rounded text-[17px]">groups</span>
+              <span id="briefCard1Title">1. €10B Budget Deadlock (Arizona Coalition)</span>
+            </div>
+            <p id="briefCard1Body" class="text-xs sm:text-[13px] text-[var(--md-sys-color-on-surface-variant)] leading-relaxed">
+              Prime Minister Bart De Wever's five-party coalition (N-VA, MR, Les Engagés, Vooruit, cd&amp;v) remains deadlocked over the multi-year 2027 federal budget (€10 billion fiscal consolidation effort), raising the threat of emergency provisional twelfths (<em>douzièmes provisoires / voorlopige twaalfden</em>).
+            </p>
+          </div>
+          <div class="pt-2 border-t border-[var(--md-sys-color-outline-variant)]/50 text-[11px] font-mono text-[var(--md-sys-color-on-surface-variant)]">
+            N-VA • MR • Les Engagés • Vooruit • cd&amp;v (81/150)
+          </div>
+        </article>
+
+        <!-- Card 2: Royal Palace Audience & Nov 16 Deadline -->
+        <article class="p-4 rounded-m3-lg border border-[var(--md-sys-color-outline-variant)]/75 flex flex-col justify-between gap-2"
+                 style="background-color: var(--md-sys-color-surface);">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-sys-color-primary)] mb-1.5">
+              <span class="material-symbols-rounded text-[17px]">castle</span>
+              <span id="briefCard2Title">2. King Philippe's Nov 16 Palace Deadline</span>
+            </div>
+            <p id="briefCard2Body" class="text-xs sm:text-[13px] text-[var(--md-sys-color-on-surface-variant)] leading-relaxed">
+              After holding Prime Minister De Wever's resignation offer in abeyance on 6 November 2026 while consulting party leaders at the Royal Palace of Brussels, HM King Philippe set a decisive reporting deadline for Monday, 16 November 2026.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-[var(--md-sys-color-outline-variant)]/50 text-[11px] font-mono text-[var(--md-sys-color-on-surface-variant)]">
+            Art. 96 Constitution • Royal Palace of Brussels
+          </div>
+        </article>
+
+        <!-- Card 3: Caretaker Governance Mechanics -->
+        <article class="p-4 rounded-m3-lg border border-[var(--md-sys-color-outline-variant)]/75 flex flex-col justify-between gap-2"
+                 style="background-color: var(--md-sys-color-surface);">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-sys-color-primary)] mb-1.5">
+              <span class="material-symbols-rounded text-[17px]">gavel</span>
+              <span id="briefCard3Title">3. Caretaker Governance Mechanics</span>
+            </div>
+            <p id="briefCard3Body" class="text-xs sm:text-[13px] text-[var(--md-sys-color-on-surface-variant)] leading-relaxed">
+              If the King accepts the resignation tomorrow, the cabinet transitions to caretaker status (<em>affaires courantes / lopende zaken / laufende Geschäfte</em>): routine state administration and urgent EU obligations continue, while new legislative initiatives are frozen.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-[var(--md-sys-color-outline-variant)]/50 text-[11px] font-mono text-[var(--md-sys-color-on-surface-variant)]">
+            Affaires courantes • Lopende zaken • Laufende Geschäfte
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         3. THREE-COLUMN LAYOUT WITH PIXEL-PERFECT TOP & BOTTOM ALIGNMENT:
+            [Column 1: RTBF FR (10)] [Column 2: VRT NWS NL (10)] [Column 3: Palace EN]
+         ====================================================================== -->
+    <div class="three-col-grid">
+
+      <!-- ====================================================================
+           COLUMN 1 (LEFT): FRENCH — RTBF ACTU (10 LATEST ARTICLES, ORIGINAL FR)
+           ==================================================================== -->
+      <section id="col-fr" aria-labelledby="fr-col-heading" class="panel-column">
+
+        <!-- Uniform Column Header (Full-width H2 on Row 1 to prevent any truncation) -->
+        <div class="panel-column-header space-y-2.5">
+          <!-- Row 1: Full-Width Language & Topic Heading (No ellipsis/nowrap) -->
+          <h2 id="fr-col-heading" class="w-full font-display font-bold text-base sm:text-[17px] text-[var(--md-sys-color-on-surface)] leading-snug">
+            French — Federal Politics
+          </h2>
+
+          <!-- Row 2: Source Attribution + Concise Language Badge + Live Timestamp -->
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="inline-flex items-center justify-center h-6 px-2 rounded-m3-sm font-display font-extrabold text-[11px] tracking-wider text-white bg-[#E30613] shadow-sm shrink-0">
+                FR
+              </span>
+              <span class="text-xs font-semibold text-[var(--md-sys-color-on-surface)]">
+                RTBF Actu
+              </span>
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-m3-pill text-[11px] font-semibold"
+                    style="background-color: var(--md-sys-color-tertiary-container); color: var(--md-sys-color-on-tertiary-container);">
+                <span class="material-symbols-rounded text-[14px]">language</span>
+                <span id="frLanguageBadge">Original language</span>
+              </span>
+            </div>
+
+            <span id="frFeedStatusText" class="text-[11px] font-mono text-[var(--md-sys-color-on-surface-variant)]">
+              RTBF • Live
+            </span>
+          </div>
+
+          <!-- Row 3: Strict Topical Filter Pill -->
+          <div class="flex items-center">
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-m3-pill text-[11px] font-semibold"
+                  style="background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);">
+              <span class="material-symbols-rounded text-[14px]">filter_alt</span>
+              <span id="frStrictFilterBadge">Strict filter: Federal Gov &amp; Coalition Talks</span>
+            </span>
+          </div>
+
+          <!-- Row 4: Compact Keyword Filter Input -->
+          <div class="relative">
+            <span class="material-symbols-rounded text-[17px] text-[var(--md-sys-color-on-surface-variant)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">search</span>
+            <input id="frFilterInput" type="search"
+                   placeholder="Filter French headlines (e.g. De Wever, budget, Roi)..."
+                   class="w-full h-9 pl-9 pr-3 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)] text-xs text-[var(--md-sys-color-on-surface)] placeholder:text-[var(--md-sys-color-on-surface-variant)]/75 focus:outline-none focus:border-[var(--md-sys-color-primary)]"
+                   style="background-color: var(--md-sys-color-surface);" />
+          </div>
+        </div>
+
+        <!-- Inner Flex Feed Container (Evenly stretches so all 3 columns align at bottom) -->
+        <div id="frArticlesList" class="panel-column-feed" lang="fr" aria-live="polite">
+          <!-- Populated dynamically with strictly the 10 latest French RTBF articles -->
+        </div>
+
+        <!-- Uniform Pinned Column Footer -->
+        <div class="panel-column-footer text-xs">
+          <span id="frFooterSource" class="text-[var(--md-sys-color-on-surface-variant)] font-medium">
+            Source: RTBF Actu (FR)
+          </span>
+          <a href="https://www.rtbf.be/en-continu" target="_blank" rel="noopener noreferrer"
+             class="m3-state-layer px-3 py-1.5 rounded-m3-pill font-semibold text-[var(--md-sys-color-primary)] inline-flex items-center gap-1">
+            <span id="frFooterLinkText">Open rtbf.be/en-continu</span>
+            <span class="material-symbols-rounded text-[14px]">open_in_new</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           COLUMN 2 (MIDDLE): DUTCH — VRT NWS (10 LATEST ARTICLES, ORIGINAL NL)
+           ==================================================================== -->
+      <section id="col-nl" aria-labelledby="nl-col-heading" class="panel-column">
+
+        <!-- Uniform Column Header (Full-width H2 on Row 1 to prevent any truncation) -->
+        <div class="panel-column-header space-y-2.5">
+          <!-- Row 1: Full-Width Language & Topic Heading (No ellipsis/nowrap) -->
+          <h2 id="nl-col-heading" class="w-full font-display font-bold text-base sm:text-[17px] text-[var(--md-sys-color-on-surface)] leading-snug">
+            Dutch — Federal Politics
+          </h2>
+
+          <!-- Row 2: Source Attribution + Concise Language Badge + Live Timestamp -->
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="inline-flex items-center justify-center h-6 px-2 rounded-m3-sm font-display font-extrabold text-[11px] tracking-wider text-white bg-[#0055FF] shadow-sm shrink-0">
+                NL
+              </span>
+              <span class="text-xs font-semibold text-[var(--md-sys-color-on-surface)]">
+                VRT NWS
+              </span>
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-m3-pill text-[11px] font-semibold"
+                    style="background-color: var(--md-sys-color-tertiary-container); color: var(--md-sys-color-on-tertiary-container);">
+                <span class="material-symbols-rounded text-[14px]">language</span>
+                <span id="nlLanguageBadge">Original language</span>
+              </span>
+            </div>
+
+            <span id="nlFeedStatusText" class="text-[11px] font-mono text-[var(--md-sys-color-on-surface-variant)]">
+              VRT NWS • Live
+            </span>
+          </div>
+
+          <!-- Row 3: Strict Topical Filter Pill -->
+          <div class="flex items-center">
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-m3-pill text-[11px] font-semibold"
+                  style="background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);">
+              <span class="material-symbols-rounded text-[14px]">filter_alt</span>
+              <span id="nlStrictFilterBadge">Strict filter: Federal Gov &amp; Coalition Talks</span>
+            </span>
+          </div>
+
+          <!-- Row 4: Compact Keyword Filter Input -->
+          <div class="relative">
+            <span class="material-symbols-rounded text-[17px] text-[var(--md-sys-color-on-surface-variant)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">search</span>
+            <input id="nlFilterInput" type="search"
+                   placeholder="Filter Dutch headlines (e.g. De Wever, begroting, Koning)..."
+                   class="w-full h-9 pl-9 pr-3 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)] text-xs text-[var(--md-sys-color-on-surface)] placeholder:text-[var(--md-sys-color-on-surface-variant)]/75 focus:outline-none focus:border-[var(--md-sys-color-primary)]"
+                   style="background-color: var(--md-sys-color-surface);" />
+          </div>
+        </div>
+
+        <!-- Inner Flex Feed Container (Evenly stretches so all 3 columns align at bottom) -->
+        <div id="nlArticlesList" class="panel-column-feed" lang="nl" aria-live="polite">
+          <!-- Populated dynamically with strictly the 10 latest Dutch VRT NWS articles -->
+        </div>
+
+        <!-- Uniform Pinned Column Footer -->
+        <div class="panel-column-footer text-xs">
+          <span id="nlFooterSource" class="text-[var(--md-sys-color-on-surface-variant)] font-medium">
+            Source: VRT NWS (NL)
+          </span>
+          <a href="https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/" target="_blank" rel="noopener noreferrer"
+             class="m3-state-layer px-3 py-1.5 rounded-m3-pill font-semibold text-[var(--md-sys-color-primary)] inline-flex items-center gap-1">
+            <span id="nlFooterLinkText">Open vrt.be/vrtnws</span>
+            <span class="material-symbols-rounded text-[14px]">open_in_new</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           COLUMN 3 (RIGHT SIDE WINDOW): BELGIAN MONARCHY ON X (@MonarchieBe)
+           Self-Contained Palace EN Feed ONLY (Matched 4-row header height)
+           ==================================================================== -->
+      <aside id="monarchy-side-window" aria-labelledby="monarchy-heading" class="panel-column panel-column-monarchy">
+
+        <!-- Uniform Column Header (Identical 4-row vertical rhythm with Columns 1 & 2) -->
+        <div class="panel-column-header space-y-2.5">
+          <!-- Row 1: Full-Width Monarchy Heading (No ellipsis/nowrap) -->
+          <h2 id="monarchy-heading" class="w-full font-display font-bold text-base sm:text-[17px] text-[var(--md-sys-color-on-surface)] leading-snug">
+            Belgian Monarchy (@MonarchieBe)
+          </h2>
+
+          <!-- Row 2: Royal Palace Source + Concise Language Badge ('English') -->
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="inline-flex items-center justify-center w-6 h-6 rounded-m3-sm shrink-0 shadow-sm border border-[var(--md-sys-color-primary)]/30"
+                    style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+                </svg>
+              </span>
+              <span id="monarchySourceLabel" class="text-xs font-semibold text-[var(--md-sys-color-on-surface)]">
+                Royal Palace
+              </span>
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-m3-pill text-[11px] font-semibold"
+                    style="background-color: var(--md-sys-color-tertiary-container); color: var(--md-sys-color-on-tertiary-container);">
+                <span class="material-symbols-rounded text-[14px]">language</span>
+                <span id="monarchyLanguageBadge">English</span>
+              </span>
+            </div>
+
+            <span id="monarchyEnPill" class="text-[11px] font-mono text-[var(--md-sys-color-on-surface-variant)]">
+              Palace EN
+            </span>
+          </div>
+
+          <!-- Row 3: Constitutional Protocol Pill (Matches Row 3 Strict Filter Pill) -->
+          <div class="flex items-center">
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-m3-pill text-[11px] font-semibold"
+                  style="background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);">
+              <span class="material-symbols-rounded text-[14px]">workspace_premium</span>
+              <span id="monarchyProtocolLabel">Art. 96 • Royal Audience &amp; Consultations</span>
+            </span>
+          </div>
+
+          <!-- Row 4: Matching-height h-9 Official Palace X Bar -->
+          <div class="h-9 px-3.5 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)] flex items-center justify-between text-xs"
+               style="background-color: var(--md-sys-color-surface);">
+            <span id="monarchyOfficialBadge" class="font-medium text-[var(--md-sys-color-on-surface-variant)]">
+              Official Palace EN Feed
+            </span>
+            <a href="https://x.com/MonarchieBe" target="_blank" rel="noopener noreferrer"
+               class="font-mono font-bold text-[11px] text-[var(--md-sys-color-primary)] hover:underline shrink-0 ml-2">
+              X / EN ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Inner Flex Feed Container (English @MonarchieBe announcements stretched cleanly to align bottom) -->
+        <div id="monarchyCommuniquesView" class="panel-column-feed" lang="en">
+          <!-- Populated dynamically with official English @MonarchieBe announcements -->
+        </div>
+
+        <!-- Uniform Pinned Column Footer -->
+        <div class="panel-column-footer text-xs">
+          <span id="monarchyFooterLeft" class="text-[var(--md-sys-color-on-surface-variant)] font-medium truncate">
+            Royal Palace of Brussels
+          </span>
+          <a href="https://x.com/MonarchieBe" target="_blank" rel="noopener noreferrer"
+             class="m3-state-layer px-3 py-1.5 rounded-m3-pill font-semibold text-[var(--md-sys-color-primary)] inline-flex items-center gap-1 shrink-0">
+            <span id="monarchyFooterLinkText">Follow @MonarchieBe</span>
+            <span class="material-symbols-rounded text-[14px]">open_in_new</span>
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       4. FOOTER WITH INSTITUTIONAL & CONSTITUTIONAL LINKS
+       ======================================================================== -->
+  <footer class="border-t border-[var(--md-sys-color-outline-variant)]/80 mt-8"
+          style="background-color: var(--md-sys-color-surface-container-low);">
+    <div class="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+      <div class="space-y-1.5">
+        <div class="flex items-center gap-2">
+          <span class="font-display font-extrabold text-lg text-[var(--md-sys-color-on-surface)]">
+            nogov<span class="text-[var(--md-sys-color-primary)]">.be</span>
+          </span>
+          <span id="footerBadge" class="text-xs px-2.5 py-0.5 rounded-m3-pill font-medium"
+                style="background-color: var(--md-sys-color-surface-container-highest); color: var(--md-sys-color-on-surface-variant);">
+            Independent Civic Monitor
+          </span>
+        </div>
+        <p id="footerDescription" class="text-xs text-[var(--md-sys-color-on-surface-variant)] max-w-2xl leading-relaxed">
+          Tracking Belgian federal governance, caretaker transitions (affaires courantes / lopende zaken / laufende Geschäfte), and untranslated bilingual public-service reporting from RTBF and VRT NWS.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 sm:gap-2.5 text-xs font-semibold">
+        <a href="https://www.belgium.be" target="_blank" rel="noopener noreferrer"
+           class="m3-state-layer px-3.5 py-2 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)] text-[var(--md-sys-color-on-surface)] inline-flex items-center gap-1.5"
+           style="background-color: var(--md-sys-color-surface);">
+          <span>belgium.be</span>
+          <span class="material-symbols-rounded text-[14px]">open_in_new</span>
+        </a>
+        <a href="https://www.dekamer.be" target="_blank" rel="noopener noreferrer"
+           class="m3-state-layer px-3.5 py-2 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)] text-[var(--md-sys-color-on-surface)] inline-flex items-center gap-1.5"
+           style="background-color: var(--md-sys-color-surface);">
+          <span>dekamer.be</span>
+          <span class="material-symbols-rounded text-[14px]">open_in_new</span>
+        </a>
+        <a href="https://www.senate.be" target="_blank" rel="noopener noreferrer"
+           class="m3-state-layer px-3.5 py-2 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)] text-[var(--md-sys-color-on-surface)] inline-flex items-center gap-1.5"
+           style="background-color: var(--md-sys-color-surface);">
+          <span>senate.be</span>
+          <span class="material-symbols-rounded text-[14px]">open_in_new</span>
+        </a>
+        <a href="https://www.monarchie.be/en" target="_blank" rel="noopener noreferrer"
+           class="m3-state-layer px-3.5 py-2 rounded-m3-pill border border-[var(--md-sys-color-outline-variant)] text-[var(--md-sys-color-on-surface)] inline-flex items-center gap-1.5"
+           style="background-color: var(--md-sys-color-surface);">
+          <span>monarchie.be</span>
+          <span class="material-symbols-rounded text-[14px]">open_in_new</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       M3 MODAL DIALOG: CONFIGURE START DATE / STATUS (QUADRILINGUAL)
+       ======================================================================== -->
+  <div id="configModal" role="dialog" aria-modal="true" aria-labelledby="configModalTitle"
+       class="fixed inset-0 z-50 hidden items-center justify-center p-4 m3-scrim">
+    <div class="w-full max-w-lg rounded-m3-xl p-6 sm:p-7 m3-elevation-3 border border-[var(--md-sys-color-outline-variant)] space-y-5 m3-card-animate"
+         style="background-color: var(--md-sys-color-surface-container-high);">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center"
+               style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);">
+            <span class="material-symbols-rounded text-[22px]">edit_calendar</span>
+          </div>
+          <div>
+            <h3 id="configModalTitle" class="font-display font-bold text-lg text-[var(--md-sys-color-on-surface)]">
+              Configure Start Date &amp; Status
+            </h3>
+            <p id="configModalSubtitle" class="text-xs text-[var(--md-sys-color-on-surface-variant)]">
+              Set the Royal Acceptance or caretaker effective timestamp for nogov.be
+            </p>
+          </div>
+        </div>
+        <button id="closeConfigModalBtn" type="button"
+                class="m3-state-layer w-9 h-9 rounded-full flex items-center justify-center text-[var(--md-sys-color-on-surface-variant)] cursor-pointer"
+                aria-label="Close dialog">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+
+      <!-- Quick Presets -->
+      <div class="space-y-2">
+        <label id="configPresetsLabel" class="block text-xs font-bold uppercase tracking-wider text-[var(--md-sys-color-on-surface-variant)]">
+          Quick Institutional Presets
+        </label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <button type="button" data-preset="tomorrow"
+                  class="preset-btn m3-state-layer p-3 rounded-m3-md border border-[var(--md-sys-color-outline-variant)] text-left cursor-pointer"
+                  style="background-color: var(--md-sys-color-surface);">
+            <div id="presetTomorrowTitle" class="text-xs font-bold text-[var(--md-sys-color-primary)]">Nov 16 Deadline</div>
+            <div class="text-[11px] font-mono text-[var(--md-sys-color-on-surface)] mt-0.5">2026-11-16 00:00</div>
+          </button>
+
+          <button type="button" data-preset="today"
+                  class="preset-btn m3-state-layer p-3 rounded-m3-md border border-[var(--md-sys-color-outline-variant)] text-left cursor-pointer"
+                  style="background-color: var(--md-sys-color-surface);">
+            <div id="presetTodayTitle" class="text-xs font-bold text-[var(--md-sys-color-primary)]">Active Caretaker</div>
+            <div class="text-[11px] font-mono text-[var(--md-sys-color-on-surface)] mt-0.5">2026-11-15 12:00</div>
+          </button>
+
+          <button type="button" data-preset="nov6"
+                  class="preset-btn m3-state-layer p-3 rounded-m3-md border border-[var(--md-sys-color-outline-variant)] text-left cursor-pointer"
+                  style="background-color: var(--md-sys-color-surface);">
+            <div id="presetNov6Title" class="text-xs font-bold text-[var(--md-sys-color-primary)]">Nov 6 Audience</div>
+            <div class="text-[11px] font-mono text-[var(--md-sys-color-on-surface)] mt-0.5">2026-11-06 19:00</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Custom Date/Time Picker -->
+      <div class="space-y-2">
+        <label id="configCustomDateLabel" for="customStartDateInput" class="block text-xs font-bold uppercase tracking-wider text-[var(--md-sys-color-on-surface-variant)]">
+          Custom Effective Timestamp (CET / Local)
+        </label>
+        <input id="customStartDateInput" type="datetime-local"
+               class="w-full px-4 py-3 rounded-m3-md border border-[var(--md-sys-color-outline)] font-mono text-sm text-[var(--md-sys-color-on-surface)] focus:outline-none focus:border-[var(--md-sys-color-primary)]"
+               style="background-color: var(--md-sys-color-surface);" />
+      </div>
+
+      <!-- Institutional Status Mode -->
+      <div class="space-y-2">
+        <label id="configStatusModeLabel" for="statusModeSelect" class="block text-xs font-bold uppercase tracking-wider text-[var(--md-sys-color-on-surface-variant)]">
+          Constitutional Status Banner
+        </label>
+        <select id="statusModeSelect"
+                class="w-full px-4 py-3 rounded-m3-md border border-[var(--md-sys-color-outline)] text-sm font-medium text-[var(--md-sys-color-on-surface)] focus:outline-none focus:border-[var(--md-sys-color-primary)]"
+                style="background-color: var(--md-sys-color-surface);">
+          <option id="optAuto" value="auto">Automatic (Switches at target timestamp)</option>
+          <option id="optWatch" value="watch">Force: Royal Palace Deadline Watch</option>
+          <option id="optCaretaker" value="caretaker">Force: Without Full-Powers Federal Government</option>
+        </select>
+      </div>
+
+      <!-- Dialog Actions -->
+      <div class="pt-2 flex items-center justify-end gap-2.5">
+        <button id="resetConfigBtn" type="button"
+                class="m3-state-layer px-4 py-2.5 rounded-m3-pill text-xs sm:text-sm font-semibold text-[var(--md-sys-color-primary)] cursor-pointer">
+          Reset Default
+        </button>
+        <button id="saveConfigBtn" type="button"
+                class="m3-state-layer px-5 py-2.5 rounded-m3-pill text-xs sm:text-sm font-semibold cursor-pointer shadow-sm"
+                style="background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);">
+          Apply Configuration
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       M3 SNACKBAR TOAST NOTIFICATION
+       ======================================================================== -->
+  <div id="m3Snackbar" role="status" aria-live="polite"
+       class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-250 px-5 py-3 rounded-m3-pill m3-elevation-3 text-xs sm:text-sm font-medium flex items-center gap-2.5 max-w-[92vw]"
+       style="background-color: var(--md-sys-color-on-surface); color: var(--md-sys-color-surface);">
+    <span class="material-symbols-rounded text-[18px]" style="color: var(--md-sys-color-primary-container);">check_circle</span>
+    <span id="m3SnackbarText">Feeds synchronized</span>
+  </div>
+
+  <!-- ========================================================================
+       APPLICATION LOGIC:
+       - Civic Slate Blue Light / Dark Mode Persistence
+       - Quadrilingual UI Engine (FR | NL | DE | EN) — Never Translating Articles
+       - Precision Live Counter (Days + HH:MM:SS)
+       - Resilient Multi-Proxy Live RSS Polling (RTBF Actu & VRT NWS, Top 10)
+       - Self-Contained Belgian Monarchy (@MonarchieBe) English Side Window
+       ======================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ----------------------------------------------------------------------
+         1. CONSTANTS & PERSISTED STATE
+         ---------------------------------------------------------------------- */
+      const DEFAULT_TARGET_ISO = '2026-11-16T00:00:00+01:00'; // Monday, Nov 16, 2026 00:00 CET
+      const SYNC_INTERVAL_SECONDS = 60;
+      const MAX_ARTICLES_PER_COLUMN = 10;
+
+      const STORAGE_KEYS = {
+        theme: 'nogov_blue_theme',
+        lang: 'nogov_ui_lang',
+        targetDate: 'nogov_target_iso',
+        statusMode: 'nogov_status_mode'
+      };
+
+      const savedLang = localStorage.getItem(STORAGE_KEYS.lang);
+      const validLangs = ['fr', 'nl', 'de', 'en'];
+
+      const state = {
+        theme: localStorage.getItem(STORAGE_KEYS.theme) === 'dark' ? 'dark' : 'light',
+        uiLang: validLangs.includes(savedLang) ? savedLang : 'en',
+        targetIso: localStorage.getItem(STORAGE_KEYS.targetDate) || DEFAULT_TARGET_ISO,
+        statusMode: localStorage.getItem(STORAGE_KEYS.statusMode) || 'auto',
+        syncRemaining: SYNC_INTERVAL_SECONDS,
+        isSyncing: false,
+        frArticles: [],
+        nlArticles: [],
+        frFilterQuery: '',
+        nlFilterQuery: ''
+      };
+
+      /* ----------------------------------------------------------------------
+         2. QUADRILINGUAL UI DICTIONARY (FR | NL | DE | EN)
+            Translates all interface chrome, counter labels, benchmarks,
+            Situational Briefing, column headers, and modal dialogs,
+            while NEVER translating the FR/NL source articles or EN Palace posts.
+         ---------------------------------------------------------------------- */
+      const UI_TRANSLATIONS = {
+        en: {
+          locale: 'en-GB',
+          headerBadge: 'Federal Monitor',
+          headerTagline: 'Belgium Federal Governance & Caretaker Watch',
+          liveSync: 'Live sync',
+          themeLight: 'Light',
+          themeDark: 'Dark',
+          statusWatch: 'FEDERAL CRISIS WATCH • ROYAL PALACE DEADLINE (NOV 16, 2026)',
+          statusCaretaker: 'WITHOUT A FULL-POWERS FEDERAL GOVERNMENT • CARETAKER STATUS',
+          configureBtn: 'Configure Date / Status',
+          daySingular: 'DAY',
+          dayPlural: 'DAYS',
+          sinceMandateEnd: 'without full-powers cabinet',
+          heroTitle: 'Days Without a Federal Government',
+          heroSubtitleWatch: 'Following stalled 2027 budget negotiations under Prime Minister Bart De Wever, Belgium faces imminent caretaker status (affaires courantes / lopende zaken / laufende Geschäfte) effective',
+          heroSubtitleCaretaker: 'Following deadlocked 2027 budget negotiations under Prime Minister Bart De Wever, Belgium is operating without a full-powers Federal Government (affaires courantes / lopende zaken / laufende Geschäfte) since',
+          timerCountdownLabel: 'Countdown to Royal Palace Threshold',
+          timerElapsedLabel: 'Elapsed Time Without Full-Powers Government',
+          unitHours: 'Hours',
+          unitMinutes: 'Minutes',
+          unitSeconds: 'Seconds',
+          referencePrefix: 'Reference:',
+          phaseWatch: 'Pre-Deadline Watch',
+          phaseCaretaker: 'Caretaker Active',
+          benchmarksTitle: 'Historical Belgian Federal Benchmarks',
+          benchmarksSubtitle: 'Live comparison against modern Belgian government formation & caretaker records',
+          bench1Title: '2010–2011 (World Record)',
+          bench1Days: '541 days',
+          bench1Desc: 'Leterme II caretaker to Di Rupo I',
+          bench2Title: '2019–2020 (652d w/ caretaker)',
+          bench2Days: '494 days',
+          bench2Desc: 'Michel II / Wilmès I & II to De Croo',
+          bench3Title: '2024–2025 (Arizona Coalition)',
+          bench3Days: '236 days',
+          bench3Desc: 'June 2024 elections to De Wever I',
+          briefingHeading: 'Situational Briefing — Federal Crisis & Caretaker Mechanics',
+          briefingDateBadge: 'November 15–16, 2026',
+          briefingSubheading: 'Constitutional and political context in your selected interface language (EN)',
+          briefingCollapse: 'Collapse',
+          briefingExpand: 'Expand',
+          briefCard1Title: '1. €10B Budget Deadlock (Arizona Coalition)',
+          briefCard1Body: 'Prime Minister Bart De Wever’s five-party coalition (N-VA, MR, Les Engagés, Vooruit, CD&V) remains locked in an emergency Sunday inner cabinet (“kern”) at 16 Rue de la Loi over the €10B 2027 budget consolidation—amid Vice-PM Jan Jambon’s warning of imminent collapse, disputes over taxes and healthcare savings, and trade union pushback against proposed public holiday/leave cuts.',
+          briefCard2Title: '2. Nov 2 Resignation Offer & Nov 16 Palace Deadline',
+          briefCard2Body: 'After Prime Minister De Wever first tendered his government’s resignation on 2 November 2026 and HM King Philippe held it in abeyance on 6 November while consulting party leaders at the Royal Palace of Brussels, the Sovereign set a decisive reporting deadline for Monday, 16 November 2026.',
+          briefCard3Title: '3. Caretaker Governance Mechanics (Art. 96)',
+          briefCard3Body: 'If King Philippe accepts the resignation tomorrow, the federal cabinet transitions to caretaker status (affaires courantes / lopende zaken / laufende Geschäfte) under Article 96 of the Constitution: routine state administration and urgent EU obligations continue, while new legislative initiatives are frozen and provisional twelfths loom for 2027.',
+          frColTitle: 'French — Federal Politics',
+          nlColTitle: 'Dutch — Federal Politics',
+          languageBadge: 'Original language',
+          monarchyLanguageBadge: 'English',
+          monarchySourceLabel: 'Royal Palace',
+          strictFilterBadge: 'Strict filter: Federal Gov & Coalition Talks',
+          frFilterPlaceholder: 'Filter French headlines (e.g. De Wever, budget, Roi)...',
+          nlFilterPlaceholder: 'Filter Dutch headlines (e.g. De Wever, begroting, Koning)...',
+          frFooterSource: 'Source: RTBF Actu (FR)',
+          frFooterLink: 'Open rtbf.be/en-continu',
+          nlFooterSource: 'Source: VRT NWS (NL)',
+          nlFooterLink: 'Open vrt.be/vrtnws',
+          monarchyTitle: 'Belgian Monarchy (@MonarchieBe)',
+          monarchyEnPill: 'Palace EN',
+          monarchyOfficialBadge: 'Official Palace EN Feed',
+          monarchyProtocolLabel: 'Art. 96 • Royal Audience & Consultations',
+          monarchyFooterLeft: 'Royal Palace of Brussels',
+          monarchyFooterLink: 'Follow @MonarchieBe',
+          footerBadge: 'Independent Civic Monitor',
+          footerDescription: 'Tracking Belgian federal governance, caretaker transitions (affaires courantes / lopende zaken / laufende Geschäfte), and original-language bilingual public-service reporting from RTBF and VRT NWS.',
+          configModalTitle: 'Configure Start Date & Status',
+          configModalSubtitle: 'Set the Royal Acceptance or caretaker effective timestamp for nogov.be',
+          configPresetsLabel: 'Quick Institutional Presets',
+          presetTomorrowTitle: 'Nov 16 Deadline',
+          presetTodayTitle: 'Active Caretaker',
+          presetNov6Title: 'Nov 6 Audience',
+          configCustomDateLabel: 'Custom Effective Timestamp (CET / Local)',
+          configStatusModeLabel: 'Constitutional Status Banner',
+          optAuto: 'Automatic (Switches at target timestamp)',
+          optWatch: 'Force: Royal Palace Deadline Watch',
+          optCaretaker: 'Force: Without Full-Powers Federal Government',
+          resetConfigBtn: 'Reset Default',
+          saveConfigBtn: 'Apply Configuration',
+          snackSyncComplete: 'Live sync complete — Top 10 FR & NL feeds updated',
+          snackConfigSaved: 'Counter date & constitutional status updated',
+          snackConfigReset: 'Reset to 16 Nov 2026 00:00 CET default'
+        },
+
+        fr: {
+          locale: 'fr-BE',
+          headerBadge: 'Moniteur Fédéral',
+          headerTagline: 'Suivi de la gouvernance fédérale belge et des affaires courantes',
+          liveSync: 'Synchro direct',
+          themeLight: 'Clair',
+          themeDark: 'Sombre',
+          statusWatch: 'ALERTE CRISE FÉDÉRALE • ÉCHÉANCE AU PALAIS ROYAL (16 NOV. 2026)',
+          statusCaretaker: 'SANS GOUVERNEMENT FÉDÉRAL DE PLEIN EXERCICE • AFFAIRES COURANTES',
+          configureBtn: 'Configurer date / statut',
+          daySingular: 'JOUR',
+          dayPlural: 'JOURS',
+          sinceMandateEnd: 'sans gouvernement de plein exercice',
+          heroTitle: 'Jours sans gouvernement fédéral',
+          heroSubtitleWatch: 'À la suite du blocage des négociations budgétaires 2027 sous le Premier ministre Bart De Wever, la Belgique risque de basculer en affaires courantes dès le',
+          heroSubtitleCaretaker: 'À la suite de l’impasse budgétaire 2027 sous le Premier ministre Bart De Wever, la Belgique est sans gouvernement fédéral de plein exercice (affaires courantes) depuis le',
+          timerCountdownLabel: 'Compte à rebours avant l’échéance royale',
+          timerElapsedLabel: 'Temps écoulé sans gouvernement de plein exercice',
+          unitHours: 'Heures',
+          unitMinutes: 'Minutes',
+          unitSeconds: 'Secondes',
+          referencePrefix: 'Référence :',
+          phaseWatch: 'Veille pré-échéance',
+          phaseCaretaker: 'Affaires courantes',
+          benchmarksTitle: 'Repères historiques fédéraux belges',
+          benchmarksSubtitle: 'Comparaison en direct avec les records belges de formation gouvernementale et d’affaires courantes',
+          bench1Title: '2010–2011 (Record mondial)',
+          bench1Days: '541 jours',
+          bench1Desc: 'Affaires courantes Leterme II jusqu’à Di Rupo I',
+          bench2Title: '2019–2020 (652 j. avec aff. cour.)',
+          bench2Days: '494 jours',
+          bench2Desc: 'Michel II / Wilmès I & II jusqu’à De Croo',
+          bench3Title: '2024–2025 (Coalition Arizona)',
+          bench3Days: '236 jours',
+          bench3Desc: 'Élections de juin 2024 jusqu’à De Wever I',
+          briefingHeading: 'Note de situation — Crise fédérale et mécanisme des affaires courantes',
+          briefingDateBadge: '15–16 novembre 2026',
+          briefingSubheading: 'Contexte constitutionnel et politique dans la langue choisie pour l’interface (FR)',
+          briefingCollapse: 'Réduire',
+          briefingExpand: 'Afficher',
+          briefCard1Title: '1. Impasse budgétaire de 10 milliards € (Coalition Arizona)',
+          briefCard1Body: 'Les cinq partis de la coalition De Wever (N-VA, MR, Les Engagés, Vooruit, CD&V) sont réunis en kern de crise ce dimanche après-midi au 16, rue de la Loi autour de l’assainissement budgétaire de 10 milliards € pour 2027, sur fond d’avertissement du vice-Premier Jan Jambon, de blocages fiscaux et de levée de boucliers syndicale sur les jours fériés.',
+          briefCard2Title: '2. Démission du 2 novembre et échéance royale du 16 novembre',
+          briefCard2Body: 'Après l’offre de démission présentée par le Premier ministre Bart De Wever le 2 novembre 2026 et la décision de S.M. le Roi Philippe du 6 novembre de la tenir en suspens tout en consultant les présidents de parti au Palais royal, l’audience décisive est fixée au lundi 16 novembre 2026.',
+          briefCard3Title: '3. Fonctionnement en affaires courantes (Art. 96 Constitution)',
+          briefCard3Body: 'Si le Roi accepte la démission demain, le gouvernement bascule en affaires courantes (article 96 de la Constitution) : la gestion quotidienne de l’État et les obligations européennes urgentes se poursuivent, tandis que toute réforme nouvelle est gelée et que les douzièmes provisoires menacent le budget 2027.',
+          frColTitle: 'Français — Politique fédérale',
+          nlColTitle: 'Néerlandais — Politique fédérale',
+          languageBadge: 'Langue originale',
+          monarchyLanguageBadge: 'Anglais',
+          monarchySourceLabel: 'Palais Royal',
+          strictFilterBadge: 'Filtre strict : Gouvernement fédéral & négociations',
+          frFilterPlaceholder: 'Filtrer les titres français (ex. De Wever, budget, Roi)...',
+          nlFilterPlaceholder: 'Filtrer les titres néerlandais (ex. De Wever, begroting, Koning)...',
+          frFooterSource: 'Source : RTBF Actu (FR)',
+          frFooterLink: 'Ouvrir rtbf.be/en-continu',
+          nlFooterSource: 'Source : VRT NWS (NL)',
+          nlFooterLink: 'Ouvrir vrt.be/vrtnws',
+          monarchyTitle: 'Monarchie belge (@MonarchieBe)',
+          monarchyEnPill: 'Palais EN',
+          monarchyOfficialBadge: 'Flux officiel du Palais (EN)',
+          monarchyProtocolLabel: 'Art. 96 • Audiences royales et consultations',
+          monarchyFooterLeft: 'Palais Royal de Bruxelles',
+          monarchyFooterLink: 'Suivre @MonarchieBe',
+          footerBadge: 'Moniteur civique indépendant',
+          footerDescription: 'Suivi de la gouvernance fédérale belge, des périodes d’affaires courantes et de l’actualité politique belge en langue originale sur RTBF et VRT NWS.',
+          configModalTitle: 'Configurer la date de début et le statut',
+          configModalSubtitle: 'Définir l’horodatage de l’acceptation royale ou de l’entrée en affaires courantes',
+          configPresetsLabel: 'Préréglages institutionnels rapides',
+          presetTomorrowTitle: 'Échéance 16 nov.',
+          presetTodayTitle: 'Affaires courantes',
+          presetNov6Title: 'Audience 6 nov.',
+          configCustomDateLabel: 'Horodatage personnalisé (CET / Local)',
+          configStatusModeLabel: 'Bandeau de statut constitutionnel',
+          optAuto: 'Automatique (Bascule à l’horodatage cible)',
+          optWatch: 'Forcer : Veille échéance Palais Royal',
+          optCaretaker: 'Forcer : Sans gouvernement de plein exercice',
+          resetConfigBtn: 'Réinitialiser',
+          saveConfigBtn: 'Appliquer',
+          snackSyncComplete: 'Synchronisation terminée — Top 10 FR et NL actualisés',
+          snackConfigSaved: 'Date du compteur et statut constitutionnel mis à jour',
+          snackConfigReset: 'Réinitialisé au 16 nov. 2026 00:00 CET par défaut'
+        },
+
+        nl: {
+          locale: 'nl-BE',
+          headerBadge: 'Federale Monitor',
+          headerTagline: 'Opvolging van de Belgische federale regering en lopende zaken',
+          liveSync: 'Live synchro',
+          themeLight: 'Licht',
+          themeDark: 'Donker',
+          statusWatch: 'FEDERALE CRISISWACHT • DEADLINE OP HET KONINKLIJK PALEIS (16 NOV 2026)',
+          statusCaretaker: 'ZONDER VOLWAARDIGE FEDERALE REGERING • LOPENDE ZAKEN',
+          configureBtn: 'Datum / status instellen',
+          daySingular: 'DAG',
+          dayPlural: 'DAGEN',
+          sinceMandateEnd: 'zonder volwaardige regering',
+          heroTitle: 'Dagen zonder federale regering',
+          heroSubtitleWatch: 'Na de vastgelopen begrotingsonderhandelingen voor 2027 onder premier Bart De Wever dreigt België in lopende zaken te belanden vanaf',
+          heroSubtitleCaretaker: 'Na de mislukte begrotingsonderhandelingen voor 2027 onder premier Bart De Wever zit België zonder volwaardige federale regering (lopende zaken) sinds',
+          timerCountdownLabel: 'Aftellen naar deadline Koninklijk Paleis',
+          timerElapsedLabel: 'Verstreken tijd zonder volwaardige regering',
+          unitHours: 'Uren',
+          unitMinutes: 'Minuten',
+          unitSeconds: 'Seconden',
+          referencePrefix: 'Referentie:',
+          phaseWatch: 'Pre-deadline wacht',
+          phaseCaretaker: 'Lopende zaken actief',
+          benchmarksTitle: 'Historische Belgische federale ijkpunten',
+          benchmarksSubtitle: 'Live vergelijking met moderne Belgische regeringsvormingen en periodes in lopende zaken',
+          bench1Title: '2010–2011 (Wereldrecord)',
+          bench1Days: '541 dagen',
+          bench1Desc: 'Lopende zaken Leterme II tot Di Rupo I',
+          bench2Title: '2019–2020 (652d incl. lop. zaken)',
+          bench2Days: '494 dagen',
+          bench2Desc: 'Michel II / Wilmès I & II tot De Croo',
+          bench3Title: '2024–2025 (Arizona-coalitie)',
+          bench3Days: '236 dagen',
+          bench3Desc: 'Verkiezingen juni 2024 tot De Wever I',
+          briefingHeading: 'Situatieschets — Federale crisis & werking in lopende zaken',
+          briefingDateBadge: '15–16 november 2026',
+          briefingSubheading: 'Grondwettelijke en politieke context in de gekozen interfacetaal (NL)',
+          briefingCollapse: 'Inklappen',
+          briefingExpand: 'Uitklappen',
+          briefCard1Title: '1. Begrotingsimpasse van 10 miljard € (Arizona-coalitie)',
+          briefCard1Body: 'De vijfpartijencoalitie van premier Bart De Wever (N-VA, MR, Les Engagés, Vooruit, CD&V) vergadert zondagnamiddag in spoed-kernkabinet op Wetstraat 16 over de begrotingsinspanning van 10 miljard € voor 2027—na de waarschuwing van vicepremier Jan Jambon, fiscale veto’s en vakbondsprotest tegen ingrepen in feestdagen en verlofstelsels.',
+          briefCard2Title: '2. Ontslagaanbod van 2 november & deadline van 16 november op het Paleis',
+          briefCard2Body: 'Nadat premier De Wever op 2 november 2026 voor het eerst het ontslag van zijn regering aanbood en koning Filip het op 6 november in beraad hield tijdens zijn consultaties met de partijvoorzitters op het Koninklijk Paleis, volgt op maandag 16 november 2026 het beslissende verslag.',
+          briefCard3Title: '3. Werking in lopende zaken (Art. 96 Grondwet)',
+          briefCard3Body: 'Aanvaardt de Koning morgen het ontslag, dan treedt het kabinet in lopende zaken (artikel 96 van de Grondwet): het dagelijks bestuur van het land en dringende Europese verplichtingen lopen door, maar nieuwe beleidsinitiatieven vallen stil en voorlopige twaalfden dreigen voor 2027.',
+          frColTitle: 'Frans — Federale politiek',
+          nlColTitle: 'Nederlands — Federale politiek',
+          languageBadge: 'Originele taal',
+          monarchyLanguageBadge: 'Engels',
+          monarchySourceLabel: 'Koninklijk Paleis',
+          strictFilterBadge: 'Strikte filter: Federale regering & onderhandelingen',
+          frFilterPlaceholder: 'Filter Franse koppen (bv. De Wever, begroting, Koning)...',
+          nlFilterPlaceholder: 'Filter Nederlandse koppen (bv. De Wever, begroting, Koning)...',
+          frFooterSource: 'Bron: RTBF Actu (FR)',
+          frFooterLink: 'Open rtbf.be/en-continu',
+          nlFooterSource: 'Bron: VRT NWS (NL)',
+          nlFooterLink: 'Open vrt.be/vrtnws',
+          monarchyTitle: 'Belgische Monarchie (@MonarchieBe)',
+          monarchyEnPill: 'Paleis EN',
+          monarchyOfficialBadge: 'Officiële Paleis-feed (EN)',
+          monarchyProtocolLabel: 'Art. 96 • Koninklijke audiënties & consultaties',
+          monarchyFooterLeft: 'Koninklijk Paleis te Brussel',
+          monarchyFooterLink: 'Volg @MonarchieBe',
+          footerBadge: 'Onafhankelijke burgermonitor',
+          footerDescription: 'Opvolging van het Belgische federale bestuur, periodes van lopende zaken en tweetalige berichtgeving in de originele taal van RTBF en VRT NWS.',
+          configModalTitle: 'Startdatum & status configureren',
+          configModalSubtitle: 'Stel het tijdstip van aanvaarding van het ontslag of lopende zaken in voor nogov.be',
+          configPresetsLabel: 'Snelle institutionele voorinstellingen',
+          presetTomorrowTitle: 'Deadline 16 nov.',
+          presetTodayTitle: 'Lopende zaken',
+          presetNov6Title: 'Audiëntie 6 nov.',
+          configCustomDateLabel: 'Aangepast tijdstip (CET / Lokaal)',
+          configStatusModeLabel: 'Grondwettelijke statusbalk',
+          optAuto: 'Automatisch (Schakelt om op doeltijdstip)',
+          optWatch: 'Forceer: Wacht op deadline Koninklijk Paleis',
+          optCaretaker: 'Forceer: Zonder volwaardige federale regering',
+          resetConfigBtn: 'Standaard herstellen',
+          saveConfigBtn: 'Toepassen',
+          snackSyncComplete: 'Live synchronisatie voltooid — Top 10 FR & NL bijgewerkt',
+          snackConfigSaved: 'Tellerdatum en grondwettelijke status bijgewerkt',
+          snackConfigReset: 'Hersteld naar standaard 16 nov 2026 00:00 CET'
+        },
+
+        de: {
+          locale: 'de-BE',
+          headerBadge: 'Föderaler Monitor',
+          headerTagline: 'Überwachung der belgischen Föderalregierung & laufenden Geschäfte',
+          liveSync: 'Live-Sync',
+          themeLight: 'Hell',
+          themeDark: 'Dunkel',
+          statusWatch: 'FÖDERALE KRISENWACHE • FRIST IM KÖNIGLICHEN PALAST (16. NOV. 2026)',
+          statusCaretaker: 'OHNE VOLL HANDLUNGSFÄHIGE FÖDERALREGIERUNG • LAUFENDE GESCHÄFTE',
+          configureBtn: 'Datum / Status anpassen',
+          daySingular: 'TAG',
+          dayPlural: 'TAGE',
+          sinceMandateEnd: 'ohne vollwertige Föderalregierung',
+          heroTitle: 'Tage ohne Föderalregierung',
+          heroSubtitleWatch: 'Nach den festgefahrenen Haushaltsverhandlungen 2027 unter Premierminister Bart De Wever droht Belgien der Übergang in die laufenden Geschäfte ab',
+          heroSubtitleCaretaker: 'Nach dem Scheitern der Haushaltsverhandlungen 2027 unter Premierminister Bart De Wever befindet sich Belgien ohne vollwertige Föderalregierung (laufende Geschäfte) seit',
+          timerCountdownLabel: 'Countdown bis zur Frist im Königlichen Palast',
+          timerElapsedLabel: 'Verstrichene Zeit ohne vollwertige Regierung',
+          unitHours: 'Stunden',
+          unitMinutes: 'Minuten',
+          unitSeconds: 'Sekunden',
+          referencePrefix: 'Referenz:',
+          phaseWatch: 'Vor-Frist-Beobachtung',
+          phaseCaretaker: 'Laufende Geschäfte',
+          benchmarksTitle: 'Historische belgische Vergleichswerte',
+          benchmarksSubtitle: 'Live-Vergleich mit früheren belgischen Regierungsbildungen und Phasen laufender Geschäfte',
+          bench1Title: '2010–2011 (Weltrekord)',
+          bench1Days: '541 Tage',
+          bench1Desc: 'Laufende Geschäfte Leterme II bis Di Rupo I',
+          bench2Title: '2019–2020 (652 T. inkl. lfd. Gesch.)',
+          bench2Days: '494 Tage',
+          bench2Desc: 'Michel II / Wilmès I & II bis De Croo',
+          bench3Title: '2024–2025 (Arizona-Koalition)',
+          bench3Days: '236 Tage',
+          bench3Desc: 'Wahlen Juni 2024 bis De Wever I',
+          briefingHeading: 'Lagebericht — Föderale Krise & Mechanismus der laufenden Geschäfte',
+          briefingDateBadge: '15.–16. November 2026',
+          briefingSubheading: 'Verfassungsrechtlicher und politischer Kontext in Ihrer gewählten Oberflächensprache (DE)',
+          briefingCollapse: 'Einklappen',
+          briefingExpand: 'Ausklappen',
+          briefCard1Title: '1. 10-Mrd.-€-Haushaltsblockade (Arizona-Koalition)',
+          briefCard1Body: 'Die Fünf-Parteien-Koalition unter Premierminister Bart De Wever (N-VA, MR, Les Engagés, Vooruit, CD&V) tagt am Sonntagnachmittag im Krisen-Kernkabinett in der Wetstraat 16 über die 10-Milliarden-€-Konsolidierung für 2027—begleitet von Vizepremier Jan Jambons Warnung, Steuerstreitigkeiten und Gewerkschaftsprotesten gegen Feiertags- und Urlaubskürzungen.',
+          briefCard2Title: '2. Rücktrittsgesuch vom 2. November & Frist im Palast am 16. November',
+          briefCard2Body: 'Nachdem Premierminister De Wever am 2. November 2026 erstmals seinen Rücktritt angeboten hatte und König Philippe diesen am 6. November während seiner Konsultationen der Parteivorsitzenden im Königlichen Palast in der Schwebe hielt, folgt am Montag, 16. November 2026 die entscheidende Audienz.',
+          briefCard3Title: '3. Laufende Geschäfte (Art. 96 Verfassung)',
+          briefCard3Body: 'Nimmt der König morgen das Rücktrittsgesuch an, führt das Kabinett nur noch die laufenden Geschäfte (Artikel 96 der Verfassung): Tagesverwaltung und dringende EU-Pflichten laufen weiter, neue Gesetzesvorhaben ruhen und vorläufige Zwölftel drohen für 2027.',
+          frColTitle: 'Französisch — Föderale Politik',
+          nlColTitle: 'Niederländisch — Föderale Politik',
+          languageBadge: 'Originalsprache',
+          monarchyLanguageBadge: 'Englisch',
+          monarchySourceLabel: 'Königlicher Palast',
+          strictFilterBadge: 'Strikter Filter: Föderalregierung & Verhandlungen',
+          frFilterPlaceholder: 'Französische Schlagzeilen filtern (z. B. De Wever, budget, Roi)...',
+          nlFilterPlaceholder: 'Niederländische Schlagzeilen filtern (z. B. De Wever, begroting, Koning)...',
+          frFooterSource: 'Quelle: RTBF Actu (FR)',
+          frFooterLink: 'rtbf.be/en-continu öffnen',
+          nlFooterSource: 'Quelle: VRT NWS (NL)',
+          nlFooterLink: 'vrt.be/vrtnws öffnen',
+          monarchyTitle: 'Belgische Monarchie (@MonarchieBe)',
+          monarchyEnPill: 'Palast EN',
+          monarchyOfficialBadge: 'Offizieller Palast-Feed (EN)',
+          monarchyProtocolLabel: 'Art. 96 • Königliche Audienzen & Konsultationen',
+          monarchyFooterLeft: 'Königlicher Palast zu Brüssel',
+          monarchyFooterLink: '@MonarchieBe folgen',
+          footerBadge: 'Unabhängiger Bürgermonitor',
+          footerDescription: 'Beobachtung der belgischen Föderalregierung, der laufenden Geschäfte und zweisprachiger Nachrichten in der Originalsprache von RTBF und VRT NWS.',
+          configModalTitle: 'Startdatum & Status konfigurieren',
+          configModalSubtitle: 'Zeitpunkt der königlichen Annahme oder der laufenden Geschäfte für nogov.be festlegen',
+          configPresetsLabel: 'Institutionelle Schnellauswahl',
+          presetTomorrowTitle: 'Frist 16. Nov.',
+          presetTodayTitle: 'Laufende Geschäfte',
+          presetNov6Title: 'Audienz 6. Nov.',
+          configCustomDateLabel: 'Benutzerdefinierter Zeitstempel (MEZ / Lokal)',
+          configStatusModeLabel: 'Verfassungsrechtlicher Statusbanner',
+          optAuto: 'Automatisch (Wechselt zum Zielzeitpunkt)',
+          optWatch: 'Erzwingen: Fristwache Königlicher Palast',
+          optCaretaker: 'Erzwingen: Ohne vollwertige Föderalregierung',
+          resetConfigBtn: 'Zurücksetzen',
+          saveConfigBtn: 'Übernehmen',
+          snackSyncComplete: 'Live-Synchronisierung abgeschlossen — Top 10 FR & NL aktualisiert',
+          snackConfigSaved: 'Zählerdatum und Verfassungsstatus aktualisiert',
+          snackConfigReset: 'Auf Standard 16. Nov. 2026 00:00 MEZ zurückgesetzt'
+        }
+      };
+
+      /* ----------------------------------------------------------------------
+         3. VERIFIED ORIGINAL-LANGUAGE SOURCE ARTICLES (FR & NL) + PALACE (EN)
+            Strictly focused on the Belgian Federal Government's status,
+            negotiations, and constitutional developments. NEVER translated.
+         ---------------------------------------------------------------------- */
+      const INITIAL_FR_ARTICLES = [
+        {
+          id: 'fr-1',
+          title: 'Kern fédéral de la dernière chance au 16, rue de la Loi : Bart De Wever tente un ultime compromis avant de voir le Roi lundi',
+          summary: 'Les vice-Premiers ministres et présidents des cinq partis de l’Arizona (N-VA, MR, Les Engagés, Vooruit, CD&V) négocient depuis dimanche après-midi pour éviter la chute définitive de l’exécutif.',
+          category: 'Kern fédéral',
+          timestamp: '2026-11-15T19:50:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        },
+        {
+          id: 'fr-2',
+          title: 'Jan Jambon (N-VA) tire la sonnette d’alarme : « Sans accord budgétaire ce soir, le gouvernement basculera en affaires courantes »',
+          summary: 'Le vice-Premier ministre et ministre du Budget avertit que la coalition Arizona ne peut plus repousser l’échéance fixée par le Palais royal après deux semaines de blocage.',
+          category: 'Gouvernement fédéral',
+          timestamp: '2026-11-15T18:55:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        },
+        {
+          id: 'fr-3',
+          title: 'De l’offre de démission du 2 novembre au sursis royal du 6 novembre : chronologie d’une crise fédérale au sommet de l’État',
+          summary: 'Retour sur les deux audiences de Bart De Wever chez le roi Philippe et sur la mission de déminage qui expire ce lundi 16 novembre au Palais royal de Bruxelles.',
+          category: 'Palais Royal',
+          timestamp: '2026-11-15T18:05:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        },
+        {
+          id: 'fr-4',
+          title: 'Suppression d’un jour férié et réforme des congés : front commun syndical contre les pistes du conclave budgétaire',
+          summary: 'La FGTB, la CSC et la CGSLB dénoncent des mesures « déséquilibrées » discutées au sein du kern fédéral pour boucler l’effort de 10 milliards d’euros.',
+          category: 'Négociations budgétaires',
+          timestamp: '2026-11-15T17:12:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        },
+        {
+          id: 'fr-5',
+          title: 'Budget 2027 en douzièmes provisoires : ce que l’absence d’accord fédéral bloque concrètement dès le 1er janvier',
+          summary: 'Sans budget voté par la Chambre, l’État fédéral ne pourra engager chaque mois qu’un douzième des crédits de 2026, gelant tout nouvel investissement.',
+          category: 'Budget 2027',
+          timestamp: '2026-11-15T16:20:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        },
+        {
+          id: 'fr-6',
+          title: 'Article 96 de la Constitution et affaires courantes : quels pouvoirs conserve un gouvernement fédéral démissionnaire ?',
+          summary: 'Gestion administrative quotidienne, urgences et représentation au Conseil européen se poursuivent, mais toute réforme structurelle est suspendue.',
+          category: 'Constitution',
+          timestamp: '2026-11-15T15:18:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        },
+        {
+          id: 'fr-7',
+          title: 'Taxe sur les plus-values, TVA et soins de santé : les trois verrous qui paralysent l’équation de 10 milliards entre Vooruit et le MR',
+          summary: 'Conner Rousseau refuse toute hausse généralisée de la TVA tandis que Georges-Louis Bouchez oppose son veto à un alourdissement de la fiscalité sur le capital.',
+          category: 'Coalition Arizona',
+          timestamp: '2026-11-15T14:10:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        },
+        {
+          id: 'fr-8',
+          title: 'Les Engagés et le CD&V proposent d’étaler la trajectoire budgétaire jusqu’en 2029 pour sauver l’exécutif De Wever',
+          summary: 'Maxime Prévôt et Sammy Mahdi tentent une médiation entre libéraux et socialistes afin d’éviter la nomination d’un informateur royal dès lundi.',
+          category: 'Coalition Arizona',
+          timestamp: '2026-11-15T12:55:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        },
+        {
+          id: 'fr-9',
+          title: 'Consultations au Palais royal : quel scénario pour le roi Philippe s’il accepte la démission de Bart De Wever demain ?',
+          summary: 'Désignation d’un informateur, mission de déminage ou retour devant les électeurs : les options constitutionnelles sur la table du souverain.',
+          category: 'Palais Royal',
+          timestamp: '2026-11-15T11:30:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        },
+        {
+          id: 'fr-10',
+          title: 'À la Chambre, l’opposition réclame une déclaration gouvernementale immédiate quelle que soit l’issue du kern de dimanche',
+          summary: 'Le PS, Ecolo-Groen, l’Open Vld et le PTB exigent que le Premier ministre s’explique devant les députés fédéraux dès mardi en séance plénière.',
+          category: 'Parlement fédéral',
+          timestamp: '2026-11-15T10:05:00+01:00',
+          url: 'https://www.rtbf.be/en-continu',
+          isNew: false
+        }
+      ];
+
+      const INITIAL_NL_ARTICLES = [
+        {
+          id: 'nl-1',
+          title: 'Spoed-kernkabinet op Wetstraat 16: premier Bart De Wever zoekt ultieme doorbraak voor audiëntie bij koning Filip',
+          summary: 'Sinds zondagnamiddag zitten de vicepremiers en voorzitters van N-VA, MR, Les Engagés, Vooruit en CD&V samen om een definitieve val van de federale regering te voorkomen.',
+          category: 'Kernkabinet',
+          timestamp: '2026-11-15T19:48:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        },
+        {
+          id: 'nl-2',
+          title: 'Vicepremier Jan Jambon (N-VA) waarschuwt coalitiepartners: “Zonder begrotingsakkoord wordt dit morgen lopende zaken”',
+          summary: 'Volgens minister van Begroting Jan Jambon is de tijd opgebruikt na het eerste ontslagaanbod van 2 november en het koninklijk uitstel van 6 november.',
+          category: 'Federale regering',
+          timestamp: '2026-11-15T18:52:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        },
+        {
+          id: 'nl-3',
+          title: 'Van het ontslagaanbod op 2 november tot de deadline van 16 november: zo belandde de regering-De Wever op de rand van de afgrond',
+          summary: 'Overzicht van twee weken crisisberaad tussen Wetstraat 16 en het Koninklijk Paleis over de meerjarenbegroting van 10 miljard euro.',
+          category: 'Koninklijk Paleis',
+          timestamp: '2026-11-15T18:00:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        },
+        {
+          id: 'nl-4',
+          title: 'Vakbonden reageren scherp op plannen rond schrappen feestdag en verlofregelingen in federale begrotingsonderhandelingen',
+          summary: 'ABVV, ACV en ACLVB dreigen met nationale acties als het kernkabinet de begroting van 10 miljard euro wil kloppen op kap van werknemersrechten.',
+          category: 'Begrotingsonderhandelingen',
+          timestamp: '2026-11-15T17:08:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        },
+        {
+          id: 'nl-5',
+          title: 'Wat gebeurt er als koning Filip maandag het ontslag van premier De Wever aanvaardt? Drie grondwettelijke scenario’s',
+          summary: 'Van een regering in lopende zaken met een koninklijke informateur tot vervroegde federale verkiezingen: zo verloopt de procedure onder artikel 96.',
+          category: 'Grondwet & Paleis',
+          timestamp: '2026-11-15T16:15:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        },
+        {
+          id: 'nl-6',
+          title: 'Voorlopige twaalfden uitgelegd: hoe de federale regering vanaf januari draait zonder goedgekeurde begroting 2027',
+          summary: 'Elke maand mag hoogstens één twaalfde van het krediet van vorig jaar worden uitgegeven; nieuwe federale beleidsinitiatieven vallen volledig stil.',
+          category: 'Begroting 2027',
+          timestamp: '2026-11-15T15:10:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        },
+        {
+          id: 'nl-7',
+          title: 'Vooruit en MR blijven botsen over meerwaardebelasting, btw-verhoging en besparingen in de gezondheidszorg',
+          summary: 'Conner Rousseau en Georges-Louis Bouchez houden vast aan hun veto’s terwijl de onderhandelaars zoeken naar 10 miljard euro structurele sanering.',
+          category: 'Arizona-coalitie',
+          timestamp: '2026-11-15T14:02:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        },
+        {
+          id: 'nl-8',
+          title: 'CD&V en Les Engagés leggen nieuw compromisvoorstel op tafel om begrotingspad te spreiden tot 2029',
+          summary: 'Sammy Mahdi en Maxime Prévôt proberen met een geleidelijker saneringstraject een breuk tussen N-VA, MR en Vooruit af te wenden.',
+          category: 'Arizona-coalitie',
+          timestamp: '2026-11-15T12:45:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        },
+        {
+          id: 'nl-9',
+          title: 'Wat mag een regering in lopende zaken wel en niet beslissen? Overzicht van de bevoegdheden van een ontslagnemend kabinet',
+          summary: 'Lopende zaken betekent geen stilstand van de federale administratie, maar wel een strikt verbod op nieuwe wetgeving zonder Kamermeerderheid.',
+          category: 'Duiding',
+          timestamp: '2026-11-15T11:20:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        },
+        {
+          id: 'nl-10',
+          title: 'Oppositie in de Kamer eist onmiddellijk debat met premier De Wever na zijn verslag op het Koninklijk Paleis',
+          summary: 'Open Vld, Groen, PS en PVDA vragen dat de eerste minister meteen na zijn onderhoud met koning Filip verantwoording aflegt in het federaal parlement.',
+          category: 'Federaal Parlement',
+          timestamp: '2026-11-15T09:55:00+01:00',
+          url: 'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+          isNew: false
+        }
+      ];
+
+      /* Official English Announcements from @MonarchieBe (Always kept in English) */
+      const MONARCHY_EN_POSTS = [
+        {
+          id: 'palace-1',
+          dateLabel: '15 Nov 2026 • 18:10 CET',
+          tag: 'Royal Audience Notice',
+          text: 'His Majesty the King will receive Prime Minister Bart De Wever in audience tomorrow, Monday 16 November 2026, at the Royal Palace of Brussels following the political consultations held over recent days.',
+          url: 'https://x.com/MonarchieBe'
+        },
+        {
+          id: 'palace-2',
+          dateLabel: '12 Nov 2026 • 16:45 CET',
+          tag: 'Palace Consultations',
+          text: 'The King continues his bilateral consultations at the Royal Palace of Brussels with the presidents of the five majority coalition parties regarding the 2027 federal budget negotiations and institutional stability.',
+          url: 'https://x.com/MonarchieBe'
+        },
+        {
+          id: 'palace-3',
+          dateLabel: '09 Nov 2026 • 17:30 CET',
+          tag: 'Constitutional Protocol',
+          text: 'In accordance with Article 96 of the Belgian Constitution, the Sovereign ensures the continuity of federal institutions while awaiting the Prime Minister’s formal report on 16 November 2026.',
+          url: 'https://www.monarchie.be/en'
+        },
+        {
+          id: 'palace-4',
+          dateLabel: '06 Nov 2026 • 19:20 CET',
+          tag: 'Official Communiqué',
+          text: 'Following the audience with Prime Minister Bart De Wever at the Castle of Laeken, the King keeps his decision on the resignation offered by the Government in abeyance and asks the Prime Minister to make a final attempt at compromise by 16 November.',
+          url: 'https://x.com/MonarchieBe'
+        },
+        {
+          id: 'palace-5',
+          dateLabel: '04 Nov 2026 • 14:15 CET',
+          tag: 'Royal Palace of Brussels',
+          text: 'The King received the Presidents of the Chamber of Representatives and the Senate at the Royal Palace of Brussels to review parliamentary readiness in the event of caretaker governance.',
+          url: 'https://x.com/MonarchieBe'
+        },
+        {
+          id: 'palace-6',
+          dateLabel: '02 Nov 2026 • 15:35 CET',
+          tag: 'Official Communiqué',
+          text: 'Prime Minister Bart De Wever was received in audience by the King at the Royal Palace of Brussels and tendered the resignation of the Federal Government. The King has reserved his decision.',
+          url: 'https://x.com/MonarchieBe'
+        }
+      ];
+
+      /* Federal politics keyword filters for live RSS polling */
+      const FR_POLITICS_REGEX = /(gouvernement|fédéral|de wever|budget|coalition|arizona|roi|philippe|chambre|mr\b|ps\b|n-va|vooruit|engagés|cd&v|jambon|bouchez|crise|démission|affaires courantes|indexation|douzièmes|kern|premier ministre|wetstraat|parlement)/i;
+      const NL_POLITICS_REGEX = /(regering|federaal|federale|de wever|begroting|coalitie|arizona|koning|filip|kamer|n-va|vooruit|mr\b|cd&v|engagés|jambon|bouchez|crisis|ontslag|lopende zaken|kernkabinet|index|twaalfden|premier|wetstraat|parlement)/i;
+
+      /* ----------------------------------------------------------------------
+         TWO-STAGE STRICT TOPICAL FILTER FOR LIVE RSS FEEDS:
+         Stage 1: Explicitly reject off-topic items (foreign domestic news such as
+                  Estonia, football/sports, standalone climate/weather, local
+                  folklore like Manneken Pis, traffic, crime, or municipal news).
+         Stage 2: Require explicit Belgian Federal Government status, caretaker
+                  transition, Royal Palace consultation, federal budget kern,
+                  or Arizona coalition negotiation context.
+         ---------------------------------------------------------------------- */
+      const OFF_TOPIC_BLOCKLIST_REGEX = /(estonie|estonia|estland|tallinn|manneken[\s-]?pis|football|voetbal|diables rouges|rode duivels|jupiler pro league|anderlecht|club brugge|union saint-gilloise|standard de liège|champions league|red flames|cyclisme|wielrennen|grand prix|formule 1|météo|weerbericht|réchauffement climatique|opwarming van de aarde|cop\d{2}|carnaval|festival|concert|cinéma|faits divers|accident de la route|verkeersongeval|gemeenteraad|conseil communal|bourgmestre|burgemeester|ukraine|gaza|donald trump)/i;
+
+      const STRICT_CORE_FEDERAL_REGEX = /(gouvernement fédéral|gouvernement de wever|regering-de wever|federale regering|affaires courantes|lopende zaken|laufende geschäfte|démission du gouvernement|ontslag van de regering|crise gouvernementale|regeringscrisis|crise politique|politieke crisis|crise budgétaire|begrotingscrisis|formation fédérale|regeringsvorming|formateur|informateur|démineur|koninklijk paleis|palais royal|roi philippe|koning filip|article 96|artikel 96|douzièmes provisoires|voorlopige twaalfden|wetstraat 16|rue de la loi 16|kernkabinet|kern fédéral|conseil des ministres|ministerraad|coalition arizona|arizona-coalitie|accord de gouvernement|regeerakkoord|conclave budgétaire|begrotingsconclaaf)/i;
+
+      const FEDERAL_ACTOR_REGEX = /(bart de wever|de wever|jan jambon|georges-louis bouchez|bouchez|conner rousseau|maxime prévôt|sammy mahdi|frank vandenbroucke|david clarinval|vincent van peteghem|theo francken|\bn-va\b|\bvooruit\b|les engagés|\bcd&v\b|\bopen vld\b|\bgroen\b|\becolo\b|\bptb\b|\bpvda\b)/i;
+
+      const FEDERAL_CRISIS_CONTEXT_REGEX = /(budget|begroting|\bkern\b|négociations|onderhandelingen|palais|paleis|\broi\b|\bkoning\b|coalition|coalitie|crise|crisis|démission|ontslag|sanering|économies|besparingen|\btva\b|\bbtw\b|plus-values|meerwaardebelasting|jours fériés|feestdagen|gouvernement|regering|chambre|kamer|parlement fédéral|federaal parlement)/i;
+
+      function passesStrictFederalGovFilter(article) {
+        const combinedText = `${article.title || ''} ${article.summary || ''}`.trim();
+        if (!combinedText) return false;
+
+        // Stage 1: Hard reject off-topic domains (Estonia, football, climate, Manneken Pis, etc.)
+        if (OFF_TOPIC_BLOCKLIST_REGEX.test(combinedText)) {
+          return false;
+        }
+
+        // Stage 2: Require core Belgian federal government/palace/caretaker match OR actor + federal negotiation context
+        if (STRICT_CORE_FEDERAL_REGEX.test(combinedText)) {
+          return true;
+        }
+
+        return FEDERAL_ACTOR_REGEX.test(combinedText) && FEDERAL_CRISIS_CONTEXT_REGEX.test(combinedText);
+      }
+
+      /* ----------------------------------------------------------------------
+         4. CIVIC SLATE BLUE LIGHT / DARK THEME CONTROLLER
+         ---------------------------------------------------------------------- */
+      function applyTheme() {
+        document.documentElement.setAttribute('data-theme', state.theme);
+        const t = UI_TRANSLATIONS[state.uiLang] || UI_TRANSLATIONS.en;
+
+        const themeIcon = document.getElementById('themeIcon');
+        const themeLabelText = document.getElementById('themeLabelText');
+        if (themeIcon) {
+          themeIcon.textContent = state.theme === 'dark' ? 'light_mode' : 'dark_mode';
+        }
+        if (themeLabelText) {
+          themeLabelText.textContent = state.theme === 'dark' ? t.themeLight : t.themeDark;
+        }
+
+        localStorage.setItem(STORAGE_KEYS.theme, state.theme);
+      }
+
+      /* ----------------------------------------------------------------------
+         5. QUADRILINGUAL UI TRANSLATION ENGINE (FR | NL | DE | EN)
+            Never modifies the French or Dutch source articles!
+         ---------------------------------------------------------------------- */
+      function applyUiLanguage() {
+        const t = UI_TRANSLATIONS[state.uiLang] || UI_TRANSLATIONS.en;
+        document.documentElement.setAttribute('lang', state.uiLang);
+        localStorage.setItem(STORAGE_KEYS.lang, state.uiLang);
+
+        // Highlight active language pill button
+        document.querySelectorAll('.lang-btn').forEach((btn) => {
+          const isActive = btn.getAttribute('data-lang-choice') === state.uiLang;
+          if (isActive) {
+            btn.style.backgroundColor = 'var(--md-sys-color-primary)';
+            btn.style.color = 'var(--md-sys-color-on-primary)';
+            btn.setAttribute('aria-pressed', 'true');
+          } else {
+            btn.style.backgroundColor = 'transparent';
+            btn.style.color = 'var(--md-sys-color-on-surface-variant)';
+            btn.setAttribute('aria-pressed', 'false');
+          }
+        });
+
+        // Header & Theme Label
+        setText('headerBadge', t.headerBadge);
+        setText('headerTagline', t.headerTagline);
+        setText('liveSyncLabel', t.liveSync);
+        setText('themeLabelText', state.theme === 'dark' ? t.themeLight : t.themeDark);
+
+        // Hero Section
+        setText('configureBtnLabel', t.configureBtn);
+        setText('sinceMandateEndLabel', t.sinceMandateEnd);
+        setText('hero-counter-heading', t.heroTitle);
+        setText('unitHoursLabel', t.unitHours);
+        setText('unitMinutesLabel', t.unitMinutes);
+        setText('unitSecondsLabel', t.unitSeconds);
+        setText('referencePrefixLabel', t.referencePrefix);
+
+        // Historical Benchmarks
+        setText('benchmarksTitle', t.benchmarksTitle);
+        setText('benchmarksSubtitle', t.benchmarksSubtitle);
+        setText('bench1Title', t.bench1Title);
+        setText('bench1Days', t.bench1Days);
+        setText('bench1Desc', t.bench1Desc);
+        setText('bench2Title', t.bench2Title);
+        setText('bench2Days', t.bench2Days);
+        setText('bench2Desc', t.bench2Desc);
+        setText('bench3Title', t.bench3Title);
+        setText('bench3Days', t.bench3Days);
+        setText('bench3Desc', t.bench3Desc);
+
+        // Situational Briefing Section
+        setText('briefing-section-heading', t.briefingHeading);
+        setText('briefingDateBadge', t.briefingDateBadge);
+        setText('briefingSubheading', t.briefingSubheading);
+        const briefingGrid = document.getElementById('briefingCardsGrid');
+        const isBriefingHidden = briefingGrid && briefingGrid.classList.contains('hidden');
+        setText('briefingToggleText', isBriefingHidden ? t.briefingExpand : t.briefingCollapse);
+        setText('briefCard1Title', t.briefCard1Title);
+        setText('briefCard1Body', t.briefCard1Body);
+        setText('briefCard2Title', t.briefCard2Title);
+        setText('briefCard2Body', t.briefCard2Body);
+        setText('briefCard3Title', t.briefCard3Title);
+        setText('briefCard3Body', t.briefCard3Body);
+
+        // Column Headers, Filters & Footers (UI chrome only — source articles remain untouched!)
+        setText('fr-col-heading', t.frColTitle);
+        setText('frLanguageBadge', t.languageBadge);
+        setText('frStrictFilterBadge', t.strictFilterBadge);
+        const frInput = document.getElementById('frFilterInput');
+        if (frInput) frInput.placeholder = t.frFilterPlaceholder;
+        setText('frFooterSource', t.frFooterSource);
+        setText('frFooterLinkText', t.frFooterLink);
+
+        setText('nl-col-heading', t.nlColTitle);
+        setText('nlLanguageBadge', t.languageBadge);
+        setText('nlStrictFilterBadge', t.strictFilterBadge);
+        const nlInput = document.getElementById('nlFilterInput');
+        if (nlInput) nlInput.placeholder = t.nlFilterPlaceholder;
+        setText('nlFooterSource', t.nlFooterSource);
+        setText('nlFooterLinkText', t.nlFooterLink);
+
+        // Monarchy Side Window Chrome
+        setText('monarchy-heading', t.monarchyTitle);
+        setText('monarchySourceLabel', t.monarchySourceLabel);
+        setText('monarchyLanguageBadge', t.monarchyLanguageBadge);
+        setText('monarchyEnPill', t.monarchyEnPill);
+        setText('monarchyOfficialBadge', t.monarchyOfficialBadge);
+        setText('monarchyProtocolLabel', t.monarchyProtocolLabel);
+        setText('monarchyFooterLeft', t.monarchyFooterLeft);
+        setText('monarchyFooterLinkText', t.monarchyFooterLink);
+
+        // Footer
+        setText('footerBadge', t.footerBadge);
+        setText('footerDescription', t.footerDescription);
+
+        // Configure Modal
+        setText('configModalTitle', t.configModalTitle);
+        setText('configModalSubtitle', t.configModalSubtitle);
+        setText('configPresetsLabel', t.configPresetsLabel);
+        setText('presetTomorrowTitle', t.presetTomorrowTitle);
+        setText('presetTodayTitle', t.presetTodayTitle);
+        setText('presetNov6Title', t.presetNov6Title);
+        setText('configCustomDateLabel', t.configCustomDateLabel);
+        setText('configStatusModeLabel', t.configStatusModeLabel);
+        setText('optAuto', t.optAuto);
+        setText('optWatch', t.optWatch);
+        setText('optCaretaker', t.optCaretaker);
+        setText('resetConfigBtn', t.resetConfigBtn);
+        setText('saveConfigBtn', t.saveConfigBtn);
+
+        // Re-sync counter text in the newly selected UI language
+        updateCounterDisplay();
+      }
+
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      /* ----------------------------------------------------------------------
+         6. PRECISION LIVE COUNTER ENGINE (DAYS + HH : MM : SS)
+         ---------------------------------------------------------------------- */
+      function formatDateHuman(dateObj, locale) {
+        try {
+          return new Intl.DateTimeFormat(locale || 'en-GB', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'Europe/Brussels'
+          }).format(dateObj) + ' CET';
+        } catch (e) {
+          return dateObj.toLocaleString();
+        }
+      }
+
+      function updateCounterDisplay() {
+        const t = UI_TRANSLATIONS[state.uiLang] || UI_TRANSLATIONS.en;
+        const now = new Date();
+        const target = new Date(state.targetIso);
+        const validTarget = isNaN(target.getTime()) ? new Date(DEFAULT_TARGET_ISO) : target;
+
+        const diffMs = now.getTime() - validTarget.getTime();
+        const isAfterTarget = diffMs >= 0;
+
+        let effectiveMode = state.statusMode;
+        if (effectiveMode === 'auto') {
+          effectiveMode = isAfterTarget ? 'caretaker' : 'watch';
+        }
+
+        const daysEl = document.getElementById('daysCounterValue');
+        const daysUnitEl = document.getElementById('daysUnitLabel');
+        const hoursEl = document.getElementById('clockHours');
+        const minsEl = document.getElementById('clockMinutes');
+        const secsEl = document.getElementById('clockSeconds');
+        const timerModeLabel = document.getElementById('timerModeLabel');
+        const eyebrowText = document.getElementById('statusEyebrowText');
+        const eyebrowChip = document.getElementById('statusEyebrowChip');
+        const dotPing = document.getElementById('statusDotPing');
+        const dotCore = document.getElementById('statusDotCore');
+        const phaseBadge = document.getElementById('phaseBadgeText');
+        const subtitlePrefixEl = document.getElementById('heroSubtitlePrefix');
+        const targetHumanEl = document.getElementById('targetDateHumanLabel');
+        const refTsEl = document.getElementById('referenceTimestampLabel');
+        const brusselsClockEl = document.getElementById('brusselsClockBadge');
+
+        // Live Brussels CET Clock
+        try {
+          brusselsClockEl.textContent = new Intl.DateTimeFormat('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: 'Europe/Brussels'
+          }).format(now) + ' CET';
+        } catch (e) {
+          brusselsClockEl.textContent = now.toTimeString().slice(0, 8);
+        }
+
+        targetHumanEl.textContent = formatDateHuman(validTarget, t.locale);
+        refTsEl.textContent = validTarget.toISOString().slice(0, 16).replace('T', ' ') + ' CET';
+
+        let wholeDays = 0;
+        let remHours = 0;
+        let remMinutes = 0;
+        let remSeconds = 0;
+
+        if (isAfterTarget) {
+          const totalSec = Math.floor(diffMs / 1000);
+          wholeDays = Math.floor(totalSec / 86400);
+          const remAfterDays = totalSec % 86400;
+          remHours = Math.floor(remAfterDays / 3600);
+          remMinutes = Math.floor((remAfterDays % 3600) / 60);
+          remSeconds = remAfterDays % 60;
+
+          timerModeLabel.innerHTML = `<span class="material-symbols-rounded text-[16px]">timer</span><span>${escapeHtml(t.timerElapsedLabel)}</span>`;
+          phaseBadge.textContent = t.phaseCaretaker;
+          subtitlePrefixEl.textContent = t.heroSubtitleCaretaker;
+        } else {
+          wholeDays = 0;
+          const remainingSec = Math.max(0, Math.ceil(Math.abs(diffMs) / 1000));
+          remHours = Math.floor(remainingSec / 3600);
+          remMinutes = Math.floor((remainingSec % 3600) / 60);
+          remSeconds = remainingSec % 60;
+
+          timerModeLabel.innerHTML = `<span class="material-symbols-rounded text-[16px]">schedule</span><span>${escapeHtml(t.timerCountdownLabel)}</span>`;
+          phaseBadge.textContent = t.phaseWatch;
+          subtitlePrefixEl.textContent = t.heroSubtitleWatch;
+        }
+
+        daysEl.textContent = String(wholeDays);
+        daysUnitEl.textContent = wholeDays === 1 ? t.daySingular : t.dayPlural;
+        hoursEl.textContent = String(remHours).padStart(2, '0');
+        minsEl.textContent = String(remMinutes).padStart(2, '0');
+        secsEl.textContent = String(remSeconds).padStart(2, '0');
+
+        if (effectiveMode === 'caretaker') {
+          eyebrowText.textContent = t.statusCaretaker;
+          eyebrowChip.style.backgroundColor = 'var(--md-sys-color-error-container)';
+          eyebrowChip.style.color = 'var(--md-sys-color-on-error-container)';
+          dotPing.className = 'pulse-ring absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75';
+          dotCore.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600';
+        } else {
+          eyebrowText.textContent = t.statusWatch;
+          eyebrowChip.style.backgroundColor = 'var(--md-sys-color-primary-container)';
+          eyebrowChip.style.color = 'var(--md-sys-color-on-primary-container)';
+          dotPing.className = 'pulse-ring absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75';
+          dotCore.className = 'relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600';
+        }
+
+        // Update Historical Benchmarks Progress Bars
+        document.getElementById('benchBar541').style.width = Math.min(100, Math.max(1.5, (wholeDays / 541) * 100)) + '%';
+        document.getElementById('benchBar494').style.width = Math.min(100, Math.max(1.5, (wholeDays / 494) * 100)) + '%';
+        document.getElementById('benchBar236').style.width = Math.min(100, Math.max(1.5, (wholeDays / 236) * 100)) + '%';
+      }
+
+      /* ----------------------------------------------------------------------
+         7. ARTICLE RENDERING (ALWAYS IN ORIGINAL FRENCH OR DUTCH)
+         ---------------------------------------------------------------------- */
+      function formatArticleTime(isoString, articleLang) {
+        const date = new Date(isoString);
+        if (isNaN(date.getTime())) {
+          return { relative: articleLang === 'fr' ? 'À l’instant' : 'Zojuist', exact: '' };
+        }
+        const now = new Date();
+        const diffMin = Math.max(1, Math.floor((now.getTime() - date.getTime()) / 60000));
+
+        let relative = '';
+        if (diffMin < 60) {
+          relative = articleLang === 'fr' ? `Il y a ${diffMin} min` : `${diffMin} min geleden`;
+        } else if (diffMin < 1440) {
+          const hrs = Math.floor(diffMin / 60);
+          relative = articleLang === 'fr' ? `Il y a ${hrs} h` : `${hrs} u geleden`;
+        } else {
+          const days = Math.floor(diffMin / 1440);
+          relative = articleLang === 'fr' ? `Il y a ${days} j` : `${days} d geleden`;
+        }
+
+        let exact = '';
+        try {
+          exact = new Intl.DateTimeFormat('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'Europe/Brussels'
+          }).format(date) + ' CET';
+        } catch (e) {
+          exact = '';
+        }
+
+        return { relative, exact };
+      }
+
+      function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str || '';
+        return div.innerHTML;
+      }
+
+      function renderArticleColumn(containerId, articles, articleLang, filterQuery) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        // Strictly take top 10 latest articles first, then apply optional keyword filter
+        let list = articles.slice(0, MAX_ARTICLES_PER_COLUMN);
+        const q = (filterQuery || '').trim().toLowerCase();
+        if (q) {
+          list = list.filter((art) =>
+            art.title.toLowerCase().includes(q) ||
+            art.summary.toLowerCase().includes(q) ||
+            art.category.toLowerCase().includes(q)
+          );
+        }
+
+        // Fixed source-language labels on cards (NEVER translated by UI switcher)
+        const ctaLabel = articleLang === 'fr' ? 'Lire sur RTBF.be' : 'Lees op VRT NWS';
+        const newBadgeLabel = articleLang === 'fr' ? 'NOUVEAU' : 'NIEUW';
+
+        if (list.length === 0) {
+          const emptyMsg = articleLang === 'fr'
+            ? 'Aucun article ne correspond à ce filtre dans les 10 dernières dépêches.'
+            : 'Geen artikels gevonden voor deze zoekterm binnen de 10 laatste berichten.';
+          container.innerHTML = `
+            <div class="p-6 rounded-m3-lg border border-dashed border-[var(--md-sys-color-outline-variant)] text-center text-xs text-[var(--md-sys-color-on-surface-variant)]">
+              ${escapeHtml(emptyMsg)}
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = list.map((article, idx) => {
+          const timeInfo = formatArticleTime(article.timestamp, articleLang);
+          const rankNumber = String(idx + 1).padStart(2, '0');
+
+          return `
+            <article class="m3-article-card p-3.5 sm:p-4 m3-card-animate flex flex-col justify-between gap-2">
+              <div>
+                <div class="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded-m3-pill"
+                          style="background-color: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface-variant);">
+                      #${rankNumber}
+                    </span>
+                    <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-m3-pill"
+                          style="background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);">
+                      ${escapeHtml(article.category)}
+                    </span>
+                    ${article.isNew ? `
+                      <span class="text-[10px] font-bold px-2 py-0.5 rounded-m3-pill uppercase tracking-wider"
+                            style="background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);">
+                        ${newBadgeLabel}
+                      </span>
+                    ` : ''}
+                  </div>
+
+                  <div class="flex items-center gap-1 text-[11px] font-mono tabular-nums text-[var(--md-sys-color-on-surface-variant)]">
+                    <span>${escapeHtml(timeInfo.relative)}</span>
+                    ${timeInfo.exact ? `<span>•</span><span class="font-semibold text-[var(--md-sys-color-on-surface)]">${escapeHtml(timeInfo.exact)}</span>` : ''}
+                  </div>
+                </div>
+
+                <h3 class="font-display font-bold text-[14.5px] sm:text-[15px] text-[var(--md-sys-color-on-surface)] leading-snug">
+                  <a href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer"
+                     class="hover:text-[var(--md-sys-color-primary)] transition-colors">
+                    ${escapeHtml(article.title)}
+                  </a>
+                </h3>
+
+                <p class="mt-1 text-xs text-[var(--md-sys-color-on-surface-variant)] leading-relaxed line-clamp-2">
+                  ${escapeHtml(article.summary)}
+                </p>
+              </div>
+
+              <div class="pt-0.5 flex items-center justify-end">
+                <a href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer"
+                   class="m3-state-layer inline-flex items-center gap-1 px-2.5 py-1 rounded-m3-pill text-[11px] font-semibold text-[var(--md-sys-color-primary)] hover:bg-[var(--md-sys-color-primary-container)]/45">
+                  <span>${ctaLabel}</span>
+                  <span class="material-symbols-rounded text-[14px]">open_in_new</span>
+                </a>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      /* ----------------------------------------------------------------------
+         8. BELGIAN MONARCHY (@MonarchieBe) ENGLISH FEED RENDERER
+            Always kept in English, evenly distributed for bottom alignment.
+         ---------------------------------------------------------------------- */
+      function renderMonarchyCommuniques() {
+        const container = document.getElementById('monarchyCommuniquesView');
+        if (!container) return;
+
+        container.innerHTML = MONARCHY_EN_POSTS.map((post) => `
+          <article class="m3-article-card p-3.5 sm:p-4 flex flex-col justify-between gap-2">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-1.5">
+                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-m3-pill"
+                      style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);">
+                  ${escapeHtml(post.tag)}
+                </span>
+                <span class="text-[11px] font-mono tabular-nums text-[var(--md-sys-color-on-surface-variant)]">
+                  ${escapeHtml(post.dateLabel)}
+                </span>
+              </div>
+              <p class="text-xs sm:text-[13px] text-[var(--md-sys-color-on-surface)] leading-relaxed">
+                ${escapeHtml(post.text)}
+              </p>
+            </div>
+            <div class="pt-1 flex items-center justify-between text-[11px]">
+              <span class="text-[var(--md-sys-color-on-surface-variant)] font-medium">@MonarchieBe • EN</span>
+              <a href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer"
+                 class="font-semibold text-[var(--md-sys-color-primary)] hover:underline inline-flex items-center gap-0.5">
+                <span>View on X</span>
+                <span class="material-symbols-rounded text-[13px]">open_in_new</span>
+              </a>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      /* ----------------------------------------------------------------------
+         9. LIVE MULTI-PROXY RSS POLLER (RTBF ACTU & VRT NWS)
+            Polls every 60s, filters for Belgian federal politics, deduplicates,
+            sorts newest-first, and enforces strictly 10 latest articles.
+         ---------------------------------------------------------------------- */
+      function stripHtmlTags(html) {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html || '';
+        return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
+      }
+
+      function parseXmlRssItems(xmlString, defaultUrl, defaultCategory) {
+        try {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(xmlString, 'text/xml');
+          const items = Array.from(doc.querySelectorAll('item'));
+          return items.map((item, idx) => {
+            const title = stripHtmlTags(item.querySelector('title')?.textContent || '');
+            const link = (item.querySelector('link')?.textContent || defaultUrl).trim();
+            const desc = stripHtmlTags(item.querySelector('description')?.textContent || '');
+            const pubDateRaw = item.querySelector('pubDate')?.textContent || new Date().toISOString();
+            const parsedDate = new Date(pubDateRaw);
+            const iso = isNaN(parsedDate.getTime()) ? new Date().toISOString() : parsedDate.toISOString();
+
+            return {
+              id: 'rss-' + idx + '-' + title.slice(0, 18),
+              title,
+              summary: desc || title,
+              category: defaultCategory,
+              timestamp: iso,
+              url: link || defaultUrl,
+              isNew: true
+            };
+          }).filter((item) => item.title.length > 10);
+        } catch (e) {
+          return [];
+        }
+      }
+
+      async function fetchFeedWithFallback(rssUrl, defaultUrl, defaultCategory) {
+        const proxies = [
+          {
+            type: 'rss2json',
+            url: `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`
+          },
+          {
+            type: 'allorigins',
+            url: `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`
+          },
+          {
+            type: 'corsproxy',
+            url: `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`
+          }
+        ];
+
+        for (const proxy of proxies) {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+          try {
+            const res = await fetch(proxy.url, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (!res.ok) continue;
+
+            if (proxy.type === 'rss2json') {
+              const data = await res.json();
+              if (data && data.status === 'ok' && Array.isArray(data.items)) {
+                return data.items.map((item, idx) => {
+                  const parsedDate = new Date(item.pubDate || Date.now());
+                  return {
+                    id: 'rss2json-' + idx + '-' + (item.title || '').slice(0, 18),
+                    title: stripHtmlTags(item.title),
+                    summary: stripHtmlTags(item.description || item.content || item.title),
+                    category: defaultCategory,
+                    timestamp: isNaN(parsedDate.getTime()) ? new Date().toISOString() : parsedDate.toISOString(),
+                    url: item.link || defaultUrl,
+                    isNew: true
+                  };
+                }).filter((a) => a.title.length > 10);
+              }
+            } else if (proxy.type === 'allorigins') {
+              const data = await res.json();
+              if (data && data.contents) {
+                const parsed = parseXmlRssItems(data.contents, defaultUrl, defaultCategory);
+                if (parsed.length > 0) return parsed;
+              }
+            } else {
+              const text = await res.text();
+              const parsed = parseXmlRssItems(text, defaultUrl, defaultCategory);
+              if (parsed.length > 0) return parsed;
+            }
+          } catch (err) {
+            clearTimeout(timeoutId);
+          }
+        }
+        return [];
+      }
+
+      function mergeAndTrimTopTen(existingArticles, incomingArticles) {
+        // Strictly pass every live RSS item through the two-stage federal government filter
+        const filteredIncoming = incomingArticles.filter((art) => passesStrictFederalGovFilter(art));
+
+        if (filteredIncoming.length === 0) {
+          return existingArticles.slice(0, MAX_ARTICLES_PER_COLUMN);
+        }
+
+        const seenTitles = new Set();
+        const combined = [];
+        const normalizedExisting = existingArticles.map((item) => ({ ...item, isNew: false }));
+
+        // Never pad with unfiltered RSS stories; backfill remaining slots up to 10 exclusively from verified baseline
+        for (const item of [...filteredIncoming, ...normalizedExisting]) {
+          const normKey = item.title.toLowerCase().replace(/[^a-z0-9àâäéèêëïîôöùûüç]/gi, '').slice(0, 48);
+          if (!normKey || seenTitles.has(normKey)) continue;
+          seenTitles.add(normKey);
+          combined.push(item);
+        }
+
+        combined.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+        return combined.slice(0, MAX_ARTICLES_PER_COLUMN);
+      }
+
+      async function syncAllFeeds(manualTrigger = false) {
+        if (state.isSyncing) return;
+        state.isSyncing = true;
+
+        const refreshIcon = document.getElementById('refreshIcon');
+        if (refreshIcon) {
+          refreshIcon.style.transform = 'rotate(360deg)';
+        }
+
+        try {
+          const [liveFrRaw, liveNlRaw] = await Promise.all([
+            fetchFeedWithFallback(
+              'https://rss.rtbf.be/article/rss/highlight_rtbfinfo_info-belgique.xml',
+              'https://www.rtbf.be/en-continu',
+              'Politique fédérale'
+            ),
+            fetchFeedWithFallback(
+              'https://www.vrt.be/vrtnws/nl.rss.articles.xml',
+              'https://www.vrt.be/vrtnws/nl/rubrieken/binnenland/politiek/',
+              'Federale politiek'
+            )
+          ]);
+
+          state.frArticles = mergeAndTrimTopTen(state.frArticles, liveFrRaw);
+          state.nlArticles = mergeAndTrimTopTen(state.nlArticles, liveNlRaw);
+
+          renderArticleColumn('frArticlesList', state.frArticles, 'fr', state.frFilterQuery);
+          renderArticleColumn('nlArticlesList', state.nlArticles, 'nl', state.nlFilterQuery);
+
+          const nowFormatted = new Intl.DateTimeFormat('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'Europe/Brussels'
+          }).format(new Date());
+
+          document.getElementById('frFeedStatusText').textContent = `RTBF • ${nowFormatted} CET`;
+          document.getElementById('nlFeedStatusText').textContent = `VRT NWS • ${nowFormatted} CET`;
+
+          if (manualTrigger) {
+            const t = UI_TRANSLATIONS[state.uiLang] || UI_TRANSLATIONS.en;
+            showSnackbar(t.snackSyncComplete);
+          }
+        } catch (e) {
+          // Graceful fallback keeps the 10 verified articles intact
+        } finally {
+          state.isSyncing = false;
+          state.syncRemaining = SYNC_INTERVAL_SECONDS;
+          setTimeout(() => {
+            if (refreshIcon) refreshIcon.style.transform = 'rotate(0deg)';
+          }, 520);
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         10. SYNC COUNTDOWN RING, SNACKBAR & MODAL HELPERS
+         ---------------------------------------------------------------------- */
+      function updateSyncCountdownUI() {
+        const textEl = document.getElementById('syncCountdownText');
+        const mobileEl = document.getElementById('syncCountdownMobile');
+        const circleEl = document.getElementById('syncProgressCircle');
+
+        const s = Math.max(0, state.syncRemaining);
+        if (textEl) textEl.textContent = `${s}s`;
+        if (mobileEl) mobileEl.textContent = `${s}s`;
+
+        if (circleEl) {
+          const circumference = 69.115;
+          const progress = (SYNC_INTERVAL_SECONDS - s) / SYNC_INTERVAL_SECONDS;
+          circleEl.style.strokeDashoffset = String(circumference * (1 - progress));
+        }
+      }
+
+      let snackbarTimeout = null;
+      function showSnackbar(message) {
+        const bar = document.getElementById('m3Snackbar');
+        const text = document.getElementById('m3SnackbarText');
+        if (!bar || !text) return;
+
+        text.textContent = message;
+        bar.classList.remove('opacity-0', 'translate-y-3');
+        bar.classList.add('opacity-100', 'translate-y-0');
+
+        clearTimeout(snackbarTimeout);
+        snackbarTimeout = setTimeout(() => {
+          bar.classList.add('opacity-0', 'translate-y-3');
+          bar.classList.remove('opacity-100', 'translate-y-0');
+        }, 3200);
+      }
+
+      function openModal(modalId) {
+        const el = document.getElementById(modalId);
+        if (!el) return;
+        el.classList.remove('hidden');
+        el.classList.add('flex');
+      }
+
+      function closeModal(modalId) {
+        const el = document.getElementById(modalId);
+        if (!el) return;
+        el.classList.add('hidden');
+        el.classList.remove('flex');
+      }
+
+      function isoToLocalDatetimeInput(isoStr) {
+        const d = new Date(isoStr);
+        if (isNaN(d.getTime())) return '2026-11-16T00:00';
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      }
+
+      /* ----------------------------------------------------------------------
+         11. INITIALIZATION & EVENT BINDINGS
+         ---------------------------------------------------------------------- */
+      function initApp() {
+        // 1. Apply Civic Slate Blue Light/Dark theme & Quadrilingual UI language
+        applyTheme();
+        applyUiLanguage();
+
+        // 2. Populate strictly 10 French RTBF articles, 10 Dutch VRT NWS articles, and English Palace feed
+        state.frArticles = [...INITIAL_FR_ARTICLES];
+        state.nlArticles = [...INITIAL_NL_ARTICLES];
+        renderArticleColumn('frArticlesList', state.frArticles, 'fr', state.frFilterQuery);
+        renderArticleColumn('nlArticlesList', state.nlArticles, 'nl', state.nlFilterQuery);
+        renderMonarchyCommuniques();
+
+        // 3. Start 1-second live counter & 60s sync loop
+        updateCounterDisplay();
+        updateSyncCountdownUI();
+
+        setInterval(() => {
+          updateCounterDisplay();
+
+          state.syncRemaining -= 1;
+          if (state.syncRemaining <= 0) {
+            state.syncRemaining = SYNC_INTERVAL_SECONDS;
+            syncAllFeeds(false);
+          }
+          updateSyncCountdownUI();
+        }, 1000);
+
+        // 4. Initial background RSS check
+        setTimeout(() => {
+          syncAllFeeds(false);
+        }, 1200);
+
+        // Light / Dark Mode Switch
+        document.getElementById('themeToggleBtn')?.addEventListener('click', () => {
+          state.theme = state.theme === 'light' ? 'dark' : 'light';
+          applyTheme();
+        });
+
+        // Quadrilingual UI Language Switcher (FR | NL | DE | EN)
+        document.querySelectorAll('.lang-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const chosenLang = btn.getAttribute('data-lang-choice');
+            if (chosenLang && validLangs.includes(chosenLang)) {
+              state.uiLang = chosenLang;
+              applyUiLanguage();
+            }
+          });
+        });
+
+        // Live Keyword Filter Inputs (FR & NL columns)
+        document.getElementById('frFilterInput')?.addEventListener('input', (e) => {
+          state.frFilterQuery = e.target.value || '';
+          renderArticleColumn('frArticlesList', state.frArticles, 'fr', state.frFilterQuery);
+        });
+
+        document.getElementById('nlFilterInput')?.addEventListener('input', (e) => {
+          state.nlFilterQuery = e.target.value || '';
+          renderArticleColumn('nlArticlesList', state.nlArticles, 'nl', state.nlFilterQuery);
+        });
+
+        // Manual Feed Refresh Button
+        document.getElementById('manualRefreshBtn')?.addEventListener('click', () => {
+          syncAllFeeds(true);
+        });
+
+        // Situational Briefing Collapse/Expand Toggle
+        const briefingToggleBtn = document.getElementById('toggleBriefingDetailsBtn');
+        const briefingGrid = document.getElementById('briefingCardsGrid');
+        const briefingChevron = document.getElementById('briefingChevron');
+        briefingToggleBtn?.addEventListener('click', () => {
+          const t = UI_TRANSLATIONS[state.uiLang] || UI_TRANSLATIONS.en;
+          const willHide = !briefingGrid.classList.contains('hidden');
+          briefingGrid.classList.toggle('hidden');
+          briefingToggleBtn.setAttribute('aria-expanded', String(!willHide));
+          setText('briefingToggleText', willHide ? t.briefingExpand : t.briefingCollapse);
+          briefingChevron.style.transform = willHide ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+
+        // Configure Start Date / Status Modal
+        const dateInput = document.getElementById('customStartDateInput');
+        const modeSelect = document.getElementById('statusModeSelect');
+
+        document.getElementById('openConfigBtn')?.addEventListener('click', () => {
+          if (dateInput) dateInput.value = isoToLocalDatetimeInput(state.targetIso);
+          if (modeSelect) modeSelect.value = state.statusMode;
+          openModal('configModal');
+        });
+
+        document.getElementById('closeConfigModalBtn')?.addEventListener('click', () => closeModal('configModal'));
+
+        document.querySelectorAll('.preset-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const preset = btn.getAttribute('data-preset');
+            if (preset === 'tomorrow') {
+              dateInput.value = '2026-11-16T00:00';
+              modeSelect.value = 'auto';
+            } else if (preset === 'today') {
+              dateInput.value = '2026-11-15T12:00';
+              modeSelect.value = 'caretaker';
+            } else if (preset === 'nov6') {
+              dateInput.value = '2026-11-06T19:00';
+              modeSelect.value = 'caretaker';
+            }
+          });
+        });
+
+        document.getElementById('saveConfigBtn')?.addEventListener('click', () => {
+          const t = UI_TRANSLATIONS[state.uiLang] || UI_TRANSLATIONS.en;
+          if (dateInput && dateInput.value) {
+            const parsed = new Date(dateInput.value);
+            if (!isNaN(parsed.getTime())) {
+              state.targetIso = parsed.toISOString();
+              localStorage.setItem(STORAGE_KEYS.targetDate, state.targetIso);
+            }
+          }
+          if (modeSelect) {
+            state.statusMode = modeSelect.value;
+            localStorage.setItem(STORAGE_KEYS.statusMode, state.statusMode);
+          }
+          updateCounterDisplay();
+          closeModal('configModal');
+          showSnackbar(t.snackConfigSaved);
+        });
+
+        document.getElementById('resetConfigBtn')?.addEventListener('click', () => {
+          const t = UI_TRANSLATIONS[state.uiLang] || UI_TRANSLATIONS.en;
+          state.targetIso = DEFAULT_TARGET_ISO;
+          state.statusMode = 'auto';
+          localStorage.setItem(STORAGE_KEYS.targetDate, state.targetIso);
+          localStorage.setItem(STORAGE_KEYS.statusMode, state.statusMode);
+          updateCounterDisplay();
+          closeModal('configModal');
+          showSnackbar(t.snackConfigReset);
+        });
+
+        // Close modal on scrim click or Escape key
+        const configModalEl = document.getElementById('configModal');
+        configModalEl?.addEventListener('click', (e) => {
+          if (e.target === configModalEl) closeModal('configModal');
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeModal('configModal');
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+      } else {
+        initApp();
+      }
+    })();
+  </script>
+</body>
+</html>
